@@ -1,0 +1,10 @@
+{
+  "extends": ["next/core-web-vitals", "airbnb", "airbnb-typescript"],
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "rules": {
+    "@typescript-eslint/dot-notation": "error"
+  },
+  "ignorePatterns": ["test.ts", "node_modules/"]
+}
