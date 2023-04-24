@@ -1,9 +1,31 @@
-import { Router } from 'express';
+import { Router, Express } from 'express';
 
-const router = Router();
+// * Networks
+import authentication from '../Network/authentication';
 
-router.get('/api', (req, res) => {
-  res.status(200).json({ mensaje: 'estas en la ruta /api' });
-});
+// const router = Router();
+
+// router.get('/api', (req, res) => {
+//   res.status(200).json({ mensaje: 'estas en la ruta /api' });
+// });
+
+// mas facil y escalable segun yo
+
+type tipadoRouter = {
+  path: string;
+  router: Router;
+};
+
+const routes: tipadoRouter[] = [
+  { path: '/auth', router: authentication }
+  // example
+  // { path: 'link', router: 'el network' }
+];
+
+function router(server: Express) {
+  routes.forEach(({ path, router }) => {
+    server.use(path, router);
+  });
+}
 
 export default router;

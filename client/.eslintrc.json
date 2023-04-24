@@ -4,7 +4,12 @@
     "project": "./tsconfig.json"
   },
   "rules": {
-    "@typescript-eslint/dot-notation": "error"
+    "react/jsx-filename-extension": "off",
+    "react/react-in-jsx-scope": "off",
+    "prettier/prettier": "off",
+    "import/no-unresolved": "off",
+    "@typescript-eslint/dot-notation": "off",
+    "import/extensions": "off"
   },
   "ignorePatterns": ["test.ts", "node_modules/", "tsconfig.json"]
 }
