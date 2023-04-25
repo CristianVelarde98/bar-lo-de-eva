@@ -1,1 +1,8 @@
 node_modules
+
+api/pnpm-lock.yaml
+api/.env
+
+client/.next/
+client/.next
+client/pnpm-lock.yaml
