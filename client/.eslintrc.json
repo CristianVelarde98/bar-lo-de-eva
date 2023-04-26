@@ -6,10 +6,8 @@
   "rules": {
     "react/jsx-filename-extension": "off",
     "react/react-in-jsx-scope": "off",
-    "prettier/prettier": "off",
+    "react/jsx-filename-extension": "off",
     "import/no-unresolved": "off",
-    "@typescript-eslint/dot-notation": "off",
     "import/extensions": "off"
-  },
-  "ignorePatterns": ["test.ts", "node_modules/", "tsconfig.json"]
+  }
 }
