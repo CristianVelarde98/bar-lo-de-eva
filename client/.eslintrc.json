@@ -1,8 +1,6 @@
 {
-  "extends": ["next/core-web-vitals", "airbnb", "airbnb-typescript"],
-  "parserOptions": {
-    "project": "./tsconfig.json"
-  },
+  "extends": ["next/core-web-vitals", "airbnb", "plugin:prettier/recommended"],
+  "plugins": ["prettier"],
   "rules": {
     "react/jsx-filename-extension": "off",
     "react/react-in-jsx-scope": "off",

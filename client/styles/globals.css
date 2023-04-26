@@ -1,3 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
 .navbarRest {
   width: calc(100% - 128px);
   margin-left: 128px;
@@ -39,14 +49,4 @@
   display: none;
   width: 40px;
   height: 40px;
-}
-
-.closeEvents:hover > button {
-  opacity: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  right: -10px;
-  top: -10px;
 }

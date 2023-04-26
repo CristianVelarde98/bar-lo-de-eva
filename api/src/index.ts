@@ -4,12 +4,7 @@ import router from './routes/index.routes';
 
 const app = express();
 app.use(express.json()); // habilita el body-parser
-
-// app.get('/', (req, res) => {
-//   res.status(200).json({ mensjae: 'hola server' });
-// });
-
-// app.use('/', indexRoute);
+// app.use(cors());
 
 // funcion encarga de todo el router de la api
 router(app);
