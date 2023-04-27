@@ -6,7 +6,7 @@
   ],
   "plugins": ["@typescript-eslint", "import", "prettier"],
   "rules": {
-    "prettier/prettier": "error",
+    "prettier/prettier": "off",
     "import/extensions": [
       "error",
       "ignorePackages",

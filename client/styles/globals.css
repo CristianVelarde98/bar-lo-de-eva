@@ -8,20 +8,45 @@
   --background-end-rgb: 255, 255, 255;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+.navbarRest {
+  width: calc(100% - 128px);
+  margin-left: 128px;
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+.bg-menu {
+  background: rgba(190, 190, 190, 0.8);
+}
+
+.size-img-menu {
+  width: 310px;
+  height: 256px;
+  min-width: 310px;
+  min-height: 256px;
+}
+
+.style3d {
+  transform-style: preserve-3d;
+}
+
+.itemsSizeEvents {
+  min-height: 60px;
+  max-width: 350px;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+.closeEvents {
+  min-height: 60px;
+  max-width: 350px;
+}
+
+.closeEvents > button {
+  opacity: 0;
+  display: none;
+  width: 40px;
+  height: 40px;
 }

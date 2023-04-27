@@ -37,3 +37,7 @@ next-env.d.ts
 .next/
 .next
 pnpm-lock.yaml
+#node_modules
+.next/
+node_modules
+package-lock.json

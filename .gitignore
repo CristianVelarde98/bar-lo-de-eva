@@ -1,4 +1,5 @@
-node_modules
+api/node_modules
+client/node_modules
 
 api/pnpm-lock.yaml
 api/.env

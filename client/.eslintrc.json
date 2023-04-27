@@ -2,8 +2,10 @@
   "extends": ["next/core-web-vitals", "airbnb", "plugin:prettier/recommended"],
   "plugins": ["prettier"],
   "rules": {
-    "prettier/prettier": "off",
+    "react/jsx-filename-extension": "off",
     "react/react-in-jsx-scope": "off",
-    "react/jsx-filename-extension": "off"
+    "react/jsx-filename-extension": "off",
+    "import/no-unresolved": "off",
+    "import/extensions": "off"
   }
 }
