@@ -1,6 +1,15 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { DatePicker, Space } from 'antd';
 import type { RangePickerProps } from 'antd/es/date-picker';
+import { Splide, SplideSlide, SplideTrack } from '@splidejs/react-splide';
+
+// * CSS
+import '@splidejs/react-splide/css';
+import '@splidejs/react-splide/css/skyblue';
+import '@splidejs/react-splide/css/sea-green';
+
+// or only core styles
+import '@splidejs/react-splide/css/core';
 
 // * Components
 import { useState } from 'react';
@@ -25,11 +34,12 @@ function Gallery() {
   };
 
   const onOk = (value: RangePickerProps['value']) => {
-    if (value && value[0])
-      dateCurrent({ ...date, started: String(Object.values(value[0])[2]) });
+    const [startDate, endDate] = value || [];
 
-    if (value && value[1])
-      dateCurrent({ ...date, finally: String(Object.values(value[1])[2]) });
+    dateCurrent({
+      started: startDate ? String(Object.values(startDate)[2]) : date.started,
+      finally: endDate ? String(Object.values(endDate)[2]) : date.finally,
+    });
   };
 
   return (
@@ -43,9 +53,35 @@ function Gallery() {
             />
           )}
         </section>
+
+        {/* CAROUSEL OF GALLERY */}
         <section className='h-1/2 flex justify-center items-center'>
-          imagen
+          <Splide hasTrack={false} aria-label='...'>
+            <SplideTrack>
+              <SplideSlide>...1</SplideSlide>
+              <SplideSlide>...2</SplideSlide>
+              <SplideSlide>...3</SplideSlide>
+              <SplideSlide>...4</SplideSlide>
+            </SplideTrack>
+
+            <div className='splide__arrows'>
+              <button
+                type='button'
+                className='splide__arrow splide__arrow--prev'
+              >
+                Prev
+              </button>
+              <button
+                type='button'
+                className='splide__arrow splide__arrow--next'
+              >
+                Next
+              </button>
+            </div>
+          </Splide>
         </section>
+
+        {/* GETTER OF CALENDAR */}
         <section className='h-1/4 bg-orange-600 flex justify-center items-center'>
           <section>
             <Space direction='vertical' size={12}>
