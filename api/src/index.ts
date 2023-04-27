@@ -1,22 +1,23 @@
-// eslint-disable-next-line import/no-unresolved
+/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable no-console */
+import express from 'express';
+import cors from 'cors';
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
 import configureRoutes from './routes/index.routes';
 
-const express = require('express');
-// import cors from 'cors';
-const cors = require('cors');
-const mongoose = require('mongoose');
-
+dotenv.config();
 const { PORT, MONGO_URL } = process.env;
 
 const app = express();
-app.use(express.json()); // habilita el body-parser
 app.use(cors({ origin: ['http://localhost:3000', 'http://localhost:3030'] }));
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
 // funcion encarga de todo el router de la api
-app.use('/', configureRoutes);
+configureRoutes(app);
 
+// * eslint nose por que no deja usar este tipado
 interface MongooseConnectionResponse {
   _id: number;
   host: string;
@@ -25,16 +26,17 @@ interface MongooseConnectionResponse {
   pass: string;
   name: string;
 }
-
 mongoose.set('strictQuery', false);
 
-mongoose
-  .connect(MONGO_URL)
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  .then((res: MongooseConnectionResponse) =>
-    console.log('conectado a mongoDB atlas')
-  )
-  .catch((err: Error) => console.log(err));
+// MONGO_URL puede ser Undefined || null
+// tambien se eleimino el parametro del then ya que no se usar
+if (MONGO_URL)
+  mongoose
+    .connect(MONGO_URL)
+    .then((res: MongooseConnectionResponse) =>
+      console.log('conectado a mongoDB atlas')
+    )
+    .catch((err: Error) => console.log(err));
 
 app.listen(PORT, () => {
   console.log(`servidor escuchando en el puerto ${PORT}`);
