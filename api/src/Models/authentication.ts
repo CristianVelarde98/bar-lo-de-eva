@@ -1,15 +1,23 @@
+/* eslint-disable no-shadow */
 import { Schema, model, Document } from 'mongoose';
 import bcrypt from 'bcryptjs';
 
 export interface IAuth extends Document {
-  user: string;
+  nickname: string;
   password: string;
+  rol: string;
   encryptPassword(password: string): Promise<string>;
   validatePassword(password: string): Promise<boolean>;
 }
 
+enum UserRoles {
+  ADMIN = 'admin',
+  SUPER_ADMIN = 'superAdmin',
+  UNKNOWN = 'unknown',
+}
+
 const AuthSchema = new Schema({
-  user: {
+  nickname: {
     type: String,
     required: true,
   },
@@ -19,6 +27,7 @@ const AuthSchema = new Schema({
   },
   rol: {
     type: String,
+    enum: Object.values(UserRoles),
     required: false,
     default: 'unknown',
   },
