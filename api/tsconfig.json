@@ -16,9 +16,11 @@
       "@controllers/*": ["src/Controllers/*"],
       "@helpers/*": ["src/Helpers/*"],
       "@store/*": ["src/Store/*"],
-      "@network/*": ["src/Network/*"]
+      "@network/*": ["src/Network/*"],
+      "@Mid/*": ["src/Middlewares/*"]
     }
   },
   "include": ["src"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
+  "files": ["types.d.ts"]
 }
