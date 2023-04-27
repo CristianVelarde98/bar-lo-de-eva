@@ -1,7 +1,8 @@
 import { Router, Express } from 'express';
-
-// * Networks
 import authentication from '@network/authentication';
+// eslint-disable-next-line import/no-unresolved
+import userRouter from './user.route';
+// * Networks
 
 // mas facil y escalable segun yo
 type tipadoRouter = {
@@ -11,14 +12,13 @@ type tipadoRouter = {
 
 const routes: tipadoRouter[] = [
   { path: '/auth', router: authentication },
-  // example
-  // { path: 'link', router: 'el network' }
+  { path: '/users', router: userRouter },
 ];
 
-function router(server: Express) {
+function configureRoutes(server: Express) {
   routes.forEach(({ path, router }) => {
     server.use(path, router);
   });
 }
 
-export default router;
+export default configureRoutes;

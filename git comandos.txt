@@ -1,0 +1,7 @@
+git fetch                         // traer los cambios
+git pull                          // traer los cambios
+git branch                        // ver en que rama estoy parado
+git branch -a                     // ver todas las ramas
+git checkout Nombre de la Rama    //ingresar
+git branch   Nombre de la Rama    //crear
+git remote prune origin           // eliminar ramas useless
