@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express';
-import UserModel from '@/models/user';
+import UserModel from '../Models/user.ts';
 
 const router = Router();
 

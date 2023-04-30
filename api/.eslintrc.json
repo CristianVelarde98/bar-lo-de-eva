@@ -6,6 +6,8 @@
   ],
   "plugins": ["@typescript-eslint", "import", "prettier"],
   "rules": {
+    "import/no-unresolved": "off",
+    "no-shadow": "off",
     "prettier/prettier": "off",
     "import/extensions": [
       "error",

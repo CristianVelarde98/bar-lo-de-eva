@@ -1,5 +1,6 @@
 // eslint-disable-next-line import/no-unresolved
 import configureRoutes from './routes/index.routes';
+import menuRouter from './routes/menu.route';
 
 const express = require('express');
 // import cors from 'cors';
@@ -15,7 +16,9 @@ app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
 // funcion encarga de todo el router de la api
-app.use('/', configureRoutes);
+app.use('/menu', menuRouter);
+
+configureRoutes(app);
 
 interface MongooseConnectionResponse {
   _id: number;
