@@ -10,6 +10,7 @@ const menuSchema = new Schema<IMenu>({
   nombre: {
     type: String,
     required: true,
+    unique: true,
   },
   descripcion: {
     type: String,
