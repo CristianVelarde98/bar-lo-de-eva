@@ -47,7 +47,7 @@ router.delete('/', async (req, res) => {
   try {
     if (!req.query.id) throw new Error('falta el campo id');
     const respuesta: string = await eliminarPlato(id);
-    res.status(200).send(respuesta);
+    res.status(200).json(respuesta);
   } catch (error) {
     res.status(400).json({ error: (error as Error).message });
   }
