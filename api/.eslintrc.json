@@ -22,7 +22,17 @@
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-var-requires": "off",
     "@typescript-eslint/ban-types": "off",
-    "no-console": "off"
+    "no-console": "off",
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": true,
+        "optionalDependencies": false,
+        "peerDependencies": false,
+        "packageDir": "./",
+        "allowModules": ["email-validator"]
+      }
+    ]
   },
   "parser": "@typescript-eslint/parser",
   "parserOptions": {

@@ -1,6 +1,7 @@
 // eslint-disable-next-line import/no-unresolved
 import configureRoutes from './routes/index.routes';
 import menuRouter from './routes/menu.route';
+import newsletterRouter from './routes/newsletter.route';
 
 const express = require('express');
 // import cors from 'cors';
@@ -17,6 +18,7 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
 // funcion encarga de todo el router de la api
 app.use('/menu', menuRouter);
+app.use('/newsletter', newsletterRouter);
 
 configureRoutes(app);
 
