@@ -6,6 +6,7 @@
     "react/jsx-filename-extension": "off",
     "import/no-unresolved": "off",
     "import/extensions": "off",
-    "prettier/prettier": "error"
+    "prettier/prettier": "error",
+    "react/require-default-props": "off"
   }
 }
