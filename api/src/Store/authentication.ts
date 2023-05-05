@@ -1,8 +1,9 @@
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
-import { ModelAuthSchema } from '@/Models/authentication';
-import { controllerHeader } from '@/Helpers/responseServer';
+import { ModelAuthSchema,IAuth } from '@/Models/authentication';
+import { controllerHeader, controller } from '@/Helpers/responseServer';
 import { serialize } from 'cookie';
+import bcrypt from 'bcryptjs';
 
 type Authentication = {
   user: string;
@@ -46,6 +47,29 @@ export async function signinStore({ user, password }: Authentication): Promise<c
       message: 'Logeado correctamente',
     };
     return response;
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+}
+
+export async function signupStore(user: string, password: string): Promise<controller>{
+  try {
+    if (secrect === undefined)
+    throw new Error('500-Error con la bases de datos');
+
+    const exists = await ModelAuthSchema.findOne({ user });
+    if (exists?.user === user) throw new Error('400-Usuario ya existe');
+    
+    const salt = await bcrypt.genSalt(10);
+    const encrypt = await bcrypt.hash(password, salt);
+    
+    const newUser: IAuth = new ModelAuthSchema({ user, password: encrypt })
+    await newUser.save();
+
+    return {
+      statusOk: 200,
+      message: "usuario creado correctamente"
+    }
   } catch (error: any) {
     throw new Error(error.message);
   }

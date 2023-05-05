@@ -1,6 +1,6 @@
 import { isEmpty, regexVery } from '@helpers/validate';
-import { controllerHeader } from '@/Helpers/responseServer';
-import { signinStore, returnResponse } from '@store/authentication';
+import { controllerHeader, controller } from '@/Helpers/responseServer';
+import { signinStore, signupStore } from '@store/authentication';
 /**
  * Función para iniciar sesión de usuario.
  * @param {string} user - El nombre del usuario.
@@ -17,11 +17,6 @@ export async function Singin(
 
     regexVery([
       {
-        property: user,
-        regex: /^[a-zA-Z0-9._%+-]+@gmail.com$/,
-        message: 'Debe ser un Correo de Gmail',
-      },
-      {
         property: password,
         regex: /^(?=.*[A-Z])(?=.*\d).{8,18}$/,
         message:
@@ -29,6 +24,32 @@ export async function Singin(
       },
     ]);
     return await signinStore({ user, password });
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+}
+
+export async function Singup(user: string, password: string, confirmPassword: string): Promise<controller> {
+  try {
+    isEmpty({ user, password, confirmPassword })
+    regexVery([
+      {
+        property: password,
+        regex: /^(?=.*[A-Z])(?=.*\d).{8,18}$/,
+        message:
+          'tenga al menos una letra mayúscula y un número,maximo 18 caracteres,minimo 8 caracteres',
+      },
+      {
+        property: confirmPassword,
+        regex: /^(?=.*[A-Z])(?=.*\d).{8,18}$/,
+        message:
+          'tenga al menos una letra mayúscula y un número,maximo 18 caracteres,minimo 8 caracteres',
+      },
+    ]);
+
+    if (confirmPassword !== password) throw new Error("401-contrasena no coinciden")
+
+    return signupStore(user, password)
   } catch (error: any) {
     throw new Error(error.message);
   }
