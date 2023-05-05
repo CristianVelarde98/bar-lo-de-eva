@@ -1,14 +1,14 @@
 import { Response } from 'express';
 
-type controller = {
+export type controller = {
   statusOk?: number;
   message?: string;
 };
 
-type controllerHeader = {
+export type controllerHeader = {
   statusOk?: number;
   message?: string;
-  token?: string;
+  token: string;
 };
 
 /**
@@ -20,9 +20,9 @@ type controllerHeader = {
  * @example
  * sendServe(response,() => controllador(body.user,body.password))
  */
-export function sendServe(response: Response, controller: () => void) {
+export async function sendServe(response: Response, controller: () => Promise<controller>) {
   try {
-    const { statusOk, message }: controller = controller();
+    const { statusOk, message }: controller = await controller();
     response.status(statusOk || 200).send(message || 'peticion sin mensage');
   } catch (error: any) {
     const customError = error.message.split('-');
@@ -32,12 +32,12 @@ export function sendServe(response: Response, controller: () => void) {
   }
 }
 
-export function sendServeHeader(response: Response, controller: Function) {
+export async function sendServeHeader(response: Response, controllerFunc: () => Promise<controllerHeader>) {
   try {
-    const { statusOk, token, message }: controllerHeader = controller();
+    const { statusOk, token, message }: controllerHeader = await controllerFunc();
     response
       .status(statusOk || 200)
-      .header('auth-token', token)
+      .setHeader("Set-Cookie", token)
       .send({
         success: message,
       });

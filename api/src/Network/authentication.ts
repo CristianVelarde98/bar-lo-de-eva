@@ -7,8 +7,8 @@ import { sendServeHeader } from '@helpers/responseServer';
 const router = Router();
 
 router.post('/', (request: Request, response: Response) => {
-  const { gmail, password } = request.body;
-  sendServeHeader(response, () => Singin(gmail, password));
+  const { user, password } = request.body;
+  sendServeHeader(response, () => Singin(user, password));
 });
 
 export default router;
