@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.post('/', async (req, res) => {
   try {
-    if (!validator.validate(req.body)) {
+    if (!validator.validate(req.body.gmail)) {
       throw new Error('El correo electrónico no es válido');
     }
     const email: INewsletter = req.body;

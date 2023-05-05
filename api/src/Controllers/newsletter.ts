@@ -49,7 +49,7 @@ export async function agregarSub(email: INewsletter): Promise<INewsletter> {
                             img {
                                display: block;
                                margin: 0 auto;
-                               max-width: 11%;
+                               max-width: 15%;
                                }
                            </style>
                         </head>
