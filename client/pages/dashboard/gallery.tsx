@@ -1,4 +1,5 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
+import { useState } from 'react';
 import { DatePicker, Space } from 'antd';
 import type { RangePickerProps } from 'antd/es/date-picker';
 import { Splide, SplideSlide, SplideTrack } from '@splidejs/react-splide';
@@ -7,12 +8,9 @@ import { Splide, SplideSlide, SplideTrack } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
 import '@splidejs/react-splide/css/skyblue';
 import '@splidejs/react-splide/css/sea-green';
-
-// or only core styles
 import '@splidejs/react-splide/css/core';
 
 // * Components
-import { useState } from 'react';
 import Temporizador from '@/components/Temporizer';
 import LayoutNavbar from '@/components/layoutNavbar';
 
@@ -56,28 +54,18 @@ function Gallery() {
 
         {/* CAROUSEL OF GALLERY */}
         <section className='h-1/2 flex justify-center items-center'>
-          <Splide hasTrack={false} aria-label='...'>
+          <Splide hasTrack={false}>
             <SplideTrack>
-              <SplideSlide>...1</SplideSlide>
-              <SplideSlide>...2</SplideSlide>
-              <SplideSlide>...3</SplideSlide>
-              <SplideSlide>...4</SplideSlide>
+              <SplideSlide>
+                <div className='w-full h-max bg-lime-600'>...0</div>
+              </SplideSlide>
+              <SplideSlide>
+                <div className='w-full h-max bg-lime-600'>...1</div>
+              </SplideSlide>
+              <SplideSlide>
+                <div className='w-full h-max bg-lime-600'>...2</div>
+              </SplideSlide>
             </SplideTrack>
-
-            <div className='splide__arrows'>
-              <button
-                type='button'
-                className='splide__arrow splide__arrow--prev'
-              >
-                Prev
-              </button>
-              <button
-                type='button'
-                className='splide__arrow splide__arrow--next'
-              >
-                Next
-              </button>
-            </div>
           </Splide>
         </section>
 
