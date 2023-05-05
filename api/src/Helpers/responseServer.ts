@@ -20,7 +20,7 @@ type controllerHeader = {
  * @example
  * sendServe(response,() => controllador(body.user,body.password))
  */
-export function sendServe(response: Response, controller: Function) {
+export function sendServe(response: Response, controller: () => void) {
   try {
     const { statusOk, message }: controller = controller();
     response.status(statusOk || 200).send(message || 'peticion sin mensage');

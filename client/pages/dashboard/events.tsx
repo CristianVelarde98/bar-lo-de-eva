@@ -3,76 +3,55 @@
 import { MouseEvent, useEffect, useState, useCallback } from 'react';
 import LayoutNavbar from '@/components/layoutNavbar';
 import EventColumn from '@/components/EventColumn';
-
-type UseStateColumns = {
-  [x: string]: string[];
-};
+import dashboard from '@/store/dashboard';
 
 function Events() {
-  const [loading, isLoading] = useState(false);
-  const [columns, setColumns] = useState<UseStateColumns>({
-    column1: [''],
-    column2: [''],
-  });
+  const {
+    itemsEvents,
+    newItemColumn1,
+    removeItemColumn1,
+    newItemColumn2,
+    removeItemColumn2,
+  } = dashboard((state) => state);
 
-  useEffect(() => {
-    const column1: string[] = [];
-    const column2: string[] = [];
-    for (let index = 0; index < 10; index += 1) {
-      column1.push(`${index}column1`);
-      column2.push(`${index}column2`);
-    }
-    setColumns({
-      column1,
-      column2,
+  const handleAddColumn1 = () => {
+    newItemColumn1({
+      _id: '0',
+      nombre: 'Nombre del Producto',
+      descripcion: 'Ingredientes',
+      precio: 0,
     });
+  };
 
-    isLoading(true);
-  }, []);
+  const handleAddColumn2 = () => {
+    newItemColumn2({
+      _id: '0',
+      nombre: 'Nombre del Producto',
+      descripcion: 'Ingredientes',
+      precio: 0,
+    });
+  };
 
-  const handleDelete = useCallback(
-    (event: MouseEvent<HTMLButtonElement>) => {
-      const { name, value } = event.currentTarget;
-      const newArray = [...columns[name]];
-      newArray.splice(Number(value), 1);
+  const handleDeleteColumn1 = (event: MouseEvent<HTMLButtonElement>) => {
+    removeItemColumn1(event.currentTarget.value);
+  };
 
-      setColumns({
-        ...columns,
-        [name]: newArray,
-      });
-    },
-    [columns],
-  );
-
-  const handleAdd = useCallback(
-    (event: MouseEvent<HTMLButtonElement>) => {
-      const { name } = event.currentTarget;
-      const newArray: string[] = [...columns[name]];
-      newArray.push(`${columns[name].length}${name}`);
-      setColumns({
-        ...columns,
-        [name]: newArray,
-      });
-    },
-    [columns],
-  );
-
-  if (!loading) return <section>loading...</section>;
+  const handleDeleteColumn2 = (event: MouseEvent<HTMLButtonElement>) => {
+    removeItemColumn2(event.currentTarget.value);
+  };
 
   return (
     <LayoutNavbar>
-      <section className="h-full w-full bg-white p-5 flex flex-row justify-center gap-10 overflow-y-scroll">
+      <section className='h-full w-full bg-white p-5 flex flex-row justify-center gap-10 overflow-y-scroll'>
         <EventColumn
-          column={columns.column1}
-          identify="column1"
-          handleDelete={handleDelete}
-          handleAdd={handleAdd}
+          column={itemsEvents.column1}
+          handleDelete={handleDeleteColumn1}
+          handleAdd={handleAddColumn1}
         />
         <EventColumn
-          column={columns.column2}
-          identify="column2"
-          handleDelete={handleDelete}
-          handleAdd={handleAdd}
+          column={itemsEvents.column2}
+          handleDelete={handleDeleteColumn2}
+          handleAdd={handleAddColumn2}
         />
       </section>
     </LayoutNavbar>

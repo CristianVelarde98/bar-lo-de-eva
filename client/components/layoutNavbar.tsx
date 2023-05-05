@@ -7,9 +7,9 @@ type PropsChildren = {
 
 function LayoutNavbar({ children }: PropsChildren) {
   return (
-    <section className='flex flex-row w-screen h-screen bg-red-600'>
+    <section className='flex flex-row w-screen h-screen'>
       <Navbar />
-      <section className='w-full h-full bg-blue-800 flex items-center justify-center navbarRest'>
+      <section className='h-full  flex items-center justify-center navbarRest'>
         {children}
       </section>
     </section>
