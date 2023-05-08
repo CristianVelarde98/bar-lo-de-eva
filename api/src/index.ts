@@ -12,12 +12,17 @@ const { PORT, MONGO_URL } = process.env;
 
 const app = express();
 app.use(express.json()); // habilita el body-parser
-app.use(cors({ origin: ['http://localhost:3000', 'http://localhost:3030'], credentials: true }));
+app.use(
+  cors({
+    origin: ['http://localhost:3000', 'http://localhost:3030'],
+    credentials: true,
+  })
+);
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
 // funcion encarga de todo el router de la api
-app.use('/menu', menuRouter);
+
 app.use('/newsletter', newsletterRouter);
 
 configureRoutes(app);

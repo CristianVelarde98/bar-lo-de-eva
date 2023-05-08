@@ -2,6 +2,8 @@ import { Router, Express } from 'express';
 import authentication from '@network/authentication';
 // eslint-disable-next-line import/no-unresolved
 import userRouter from './user.route';
+import menuRouter from './menu.route';
+
 // * Networks
 
 // mas facil y escalable segun yo
@@ -13,6 +15,7 @@ type tipadoRouter = {
 const routes: tipadoRouter[] = [
   { path: '/auth', router: authentication },
   { path: '/users', router: userRouter },
+  { path: '/menu', router: menuRouter },
 ];
 
 function configureRoutes(server: Express) {

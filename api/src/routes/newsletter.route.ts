@@ -1,12 +1,20 @@
 import express from 'express';
 import { INewsletter } from '../Models/newsletter.ts';
-import { agregarSub } from '../Controllers/newsletter.ts';
+import { agregarSub, enviarCadena } from '../Controllers/newsletter.ts';
+import Joi from 'joi';
 
 const validator = require('email-validator');
 
 const router = express.Router();
 
-router.post('/', async (req, res) => {
+const eventoSchema = Joi.object({
+  encabezado: Joi.string().required(),
+  titulo: Joi.string().required(),
+  imagen: Joi.string().uri().required(),
+  descripcion: Joi.string().required(),
+});
+
+router.post('/suscribirse', async (req, res) => {
   try {
     if (!validator.validate(req.body.gmail)) {
       throw new Error('El correo electrónico no es válido');
@@ -17,6 +25,16 @@ router.post('/', async (req, res) => {
       res
         .status(200)
         .json({ mensaje: 'gracias por estar al tanto de las novedades' });
+  } catch (error) {
+    res.status(400).json({ error: (error as Error).message });
+  }
+});
+
+router.post('/enviar', async (req, res) => {
+  try {
+    const nuevoEvento = await eventoSchema.validateAsync(req.body);
+    const cadena = await enviarCadena(nuevoEvento);
+    res.status(200).json(cadena);
   } catch (error) {
     res.status(400).json({ error: (error as Error).message });
   }
