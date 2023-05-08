@@ -1,21 +1,11 @@
 import React from 'react';
-
 // * Components
-import axios from 'axios';
-import LayoutNavbar from '@/components/layoutNavbar';
+import LayoutNavbar from '@/pages/dashboard/layout';
+import { useTask } from '@/Context/TaskBard';
 
 function Dashboard() {
-  async function peticionPrueba() {
-    const prueba = await axios.post(
-      'http://localhost:3030/auth',
-      {
-        user: 'rozoparraduvan@gmail.com',
-        password: '123456789Kk/',
-      },
-      { withCredentials: true }
-    );
-    console.log(prueba);
-  }
+  const contexto = useTask();
+  console.log('🚀 ~ file: index.tsx:8 ~ Dashboard ~ contexto:', contexto);
 
   return (
     <LayoutNavbar>
@@ -25,9 +15,6 @@ function Dashboard() {
           <p className='m-3'>
             ultimos cambios realizados X personas cambiaron a las y tanto horas.
           </p>
-          <button type='button' onClick={peticionPrueba}>
-            prueba
-          </button>
         </section>
       </section>
     </LayoutNavbar>

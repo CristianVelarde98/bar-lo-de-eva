@@ -1,6 +1,19 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import type { AppProps } from 'next/app';
+import { NextComponentType, NextPageContext } from 'next';
+import TaskProvider from '@/components/TaskProvider';
 
-export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />;
+interface PropsDashboardApp {
+  Component: NextComponentType<NextPageContext, any, any>;
+  pageProps: any;
+}
+
+export default function DashboardApp({
+  Component,
+  pageProps,
+}: PropsDashboardApp) {
+  return (
+    <TaskProvider>
+      <Component {...pageProps} />
+    </TaskProvider>
+  );
 }

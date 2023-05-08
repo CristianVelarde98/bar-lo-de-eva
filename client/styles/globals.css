@@ -21,6 +21,10 @@
   background: rgba(190, 190, 190, 0.8);
 }
 
+.sizeContenedor {
+  height: calc(100% - 20px);
+}
+
 .size-img-menu {
   width: auto;
   height: 100%;
@@ -83,8 +87,19 @@
   border-radius: 8px;
   z-index: 5;
 }
-.menuNew:hover {
-  transform: scale(1.2);
+.ant-btn span {
+  background-color: #171717;
+  color: white;
+  border-radius: 5px;
+  width: 60px;
+}
+
+.ant-btn span:hover {
+  background-color: #4096ff;
+}
+
+.h-6\/5 {
+  height: 90%;
 }
 
 /* .closeMenu {

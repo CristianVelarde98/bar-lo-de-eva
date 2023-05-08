@@ -1,30 +1,68 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable no-unused-vars */
-import React, { MouseEvent, memo, useState } from 'react';
+import React, { MouseEvent, memo, useCallback, useMemo, useState } from 'react';
 import { Column } from '@/store/dashboard';
 import EditItemMenu from './WindowsEmerging/EditItemMenu';
+import { useTask } from '@/Context/TaskBard';
 
 type PropsEventsColumn = {
+  indentify: string;
   column: Column[];
-  handleDelete: (event: MouseEvent<HTMLButtonElement>) => void;
-  handleAdd: (event: MouseEvent<HTMLButtonElement>) => void;
 };
 
-function EventsColumn({ column, handleDelete, handleAdd }: PropsEventsColumn) {
+function EventsColumn({ indentify, column }: PropsEventsColumn) {
+  const { newItemColumn, deleteItemColumn } = useTask();
   const [openWindows, setOpenWindows] = useState(false);
   const [id, setId] = useState('');
 
-  const handleShowWindowsOpen = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    setId(event.currentTarget.value);
-    setOpenWindows(true);
-  };
+  // const handleShowWindowsOpen = (
+  //   event: React.MouseEvent<HTMLButtonElement>
+  // ) => {
+  //   setId(event.currentTarget.value);
+  //   setOpenWindows(true);
+  // };
 
-  const handleShowWindowsClose = () => {
+  // const handleShowWindowsClose = () => {
+  //   setId('');
+  //   setOpenWindows(false);
+  // };
+
+  const generateId = function* generateId() {
+    let idNew = 1;
+    while (true) {
+      yield (idNew += 1);
+    }
+  };
+  const idGenerator = useMemo(generateId, []);
+
+  const handleShowWindowsOpen = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      setId(event.currentTarget.value);
+      setOpenWindows(true);
+    },
+    []
+  );
+
+  const handleShowWindowsClose = useCallback(() => {
     setId('');
     setOpenWindows(false);
-  };
+  }, []);
+
+  const handleNewItem = useCallback(() => {
+    newItemColumn(indentify, {
+      _id: String(idGenerator.next().value),
+      nombre: 'Nombre del Producto',
+      descripcion: 'Ingredientes',
+      precio: 0,
+    });
+  }, [idGenerator, indentify, newItemColumn]);
+
+  const handleDeleteItem = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      deleteItemColumn(event.currentTarget.value, indentify);
+    },
+    [deleteItemColumn, indentify]
+  );
 
   return (
     <section className='w-1/2 h-max flex flex-col items-center gap-3'>
@@ -35,7 +73,7 @@ function EventsColumn({ column, handleDelete, handleAdd }: PropsEventsColumn) {
         >
           <button
             value={_id}
-            onClick={(events) => handleDelete(events)}
+            onClick={handleDeleteItem}
             type='button'
             className='bg-red-700 text-white font-bold center-items shadow-md transition-all deleteItem'
           >
@@ -59,7 +97,7 @@ function EventsColumn({ column, handleDelete, handleAdd }: PropsEventsColumn) {
         </section>
       ))}
       <button
-        onClick={handleAdd}
+        onClick={handleNewItem}
         type='button'
         className='bg-red-600 rounded-lg font-bold text-white w-2/3 h-32'
       >

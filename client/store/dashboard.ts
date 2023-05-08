@@ -61,7 +61,7 @@ const dashboard = create<State & Actions>((set) => ({
     set((state) => {
       let newItems = [...state.itemsMenu];
 
-      if (state.itemsMenu.length <= 5) newItems = [...state.itemsMenu, newItem];
+      if (state.itemsMenu.length < 5) newItems = [...state.itemsMenu, newItem];
 
       return { ...state, itemsMenu: newItems };
     }),

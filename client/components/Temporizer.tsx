@@ -36,8 +36,8 @@ function Temporizador({ startedTime, finallyTime }: PropsTemporizer) {
   }, []);
 
   return (
-    <section className='flex flex-col items-center justify-center gap-2'>
-      <h1 className='text-3xl font-bold'>INICIA</h1>
+    <section className='flex flex-col items-center justify-center gap-2 p-5 rounded-lg'>
+      <h1 className='text-3xl font-bold text-white'>INICIA</h1>
       <section className='flex flex-row gap-2'>
         <p className='w-12 h-10 rounded-md bg-white font-bold flex items-center justify-center shadow-lg'>
           {startedTemporizer.days || '0'} D

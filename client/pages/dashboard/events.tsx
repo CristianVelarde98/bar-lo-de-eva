@@ -1,58 +1,105 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/jsx-no-bind */
-import { MouseEvent, useEffect, useState, useCallback } from 'react';
-import LayoutNavbar from '@/components/layoutNavbar';
-import EventColumn from '@/components/EventColumn';
-import dashboard from '@/store/dashboard';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { useState } from 'react';
+import { DatePicker, Space } from 'antd';
+import type { RangePickerProps } from 'antd/es/date-picker';
+import { Splide, SplideSlide, SplideTrack } from '@splidejs/react-splide';
+// * CSS
+import '@splidejs/react-splide/css';
+import '@splidejs/react-splide/css/skyblue';
+import '@splidejs/react-splide/css/sea-green';
+import '@splidejs/react-splide/css/core';
+
+// * Components
+import Temporizador from '@/components/Temporizer';
+import LayoutNavbar from '@/pages/dashboard/layout';
+import { useTask } from '@/Context/TaskBard';
+import ItemGallery from '@/components/ItemGallery';
+
+type PropsState = {
+  started: string;
+  finally: string;
+};
+
+const { RangePicker } = DatePicker;
 
 function Events() {
-  const {
-    itemsEvents,
-    newItemColumn1,
-    removeItemColumn1,
-    newItemColumn2,
-    removeItemColumn2,
-  } = dashboard((state) => state);
+  const { itemsEvents, newItemsEvents } = useTask();
+  const [date, dateCurrent] = useState<PropsState>({
+    started: '',
+    finally: '',
+  });
 
-  const handleAddColumn1 = () => {
-    newItemColumn1({
-      _id: '0',
-      nombre: 'Nombre del Producto',
-      descripcion: 'Ingredientes',
-      precio: 0,
+  const onChange = (value: RangePickerProps['value']) => {
+    if (value === null) dateCurrent({ started: '', finally: '' });
+  };
+
+  const onOk = (value: RangePickerProps['value']) => {
+    const [startDate, endDate] = value || [];
+
+    dateCurrent({
+      started: startDate ? String(Object.values(startDate)[2]) : date.started,
+      finally: endDate ? String(Object.values(endDate)[2]) : date.finally,
     });
-  };
-
-  const handleAddColumn2 = () => {
-    newItemColumn2({
-      _id: '0',
-      nombre: 'Nombre del Producto',
-      descripcion: 'Ingredientes',
-      precio: 0,
-    });
-  };
-
-  const handleDeleteColumn1 = (event: MouseEvent<HTMLButtonElement>) => {
-    removeItemColumn1(event.currentTarget.value);
-  };
-
-  const handleDeleteColumn2 = (event: MouseEvent<HTMLButtonElement>) => {
-    removeItemColumn2(event.currentTarget.value);
   };
 
   return (
     <LayoutNavbar>
-      <section className='h-full w-full bg-white p-5 flex flex-row justify-center gap-10 overflow-y-scroll'>
-        <EventColumn
-          column={itemsEvents.column1}
-          handleDelete={handleDeleteColumn1}
-          handleAdd={handleAddColumn1}
-        />
-        <EventColumn
-          column={itemsEvents.column2}
-          handleDelete={handleDeleteColumn2}
-          handleAdd={handleAddColumn2}
-        />
+      <section className='w-full h-full flex flex-col'>
+        <section className='h-1/6 w-auto bg-black rounded-md flex justify-center items-center absolute left-20 top-2'>
+          {date.started && date.finally && (
+            <Temporizador
+              startedTime={date.started}
+              finallyTime={date.finally}
+            />
+          )}
+        </section>
+
+        {/* CAROUSEL OF GALLERY */}
+        <section className='h-4/5 flex justify-center items-center'>
+          <Splide
+            options={{
+              drag: false,
+            }}
+            hasTrack={false}
+            className='w-full h-full flex items-center justify-center'
+          >
+            <SplideTrack className='w-full h-full center-items'>
+              {itemsEvents.map(({ _id, imagen }, index) => (
+                <SplideSlide
+                  key={`${imagen + index}`}
+                  className='w-full h-6/5 center-items'
+                >
+                  <ItemGallery identify='events' id={_id} imagen={imagen} />
+                </SplideSlide>
+              ))}
+            </SplideTrack>
+          </Splide>
+        </section>
+
+        {/* GETTER OF CALENDAR */}
+        <section className='h-1/5 flex flex-row justify-center items-center gap-6'>
+          <section>
+            <Space direction='vertical' size={12}>
+              <RangePicker
+                status='error'
+                size='large'
+                showTime={{ format: 'HH:mm' }}
+                format='YYYY-MM-DD HH:mm'
+                onOk={onOk}
+                onChange={onChange}
+              />
+            </Space>
+          </section>
+          <button
+            onClick={() => {
+              newItemsEvents(date.started, date.finally);
+            }}
+            type='button'
+            className='w-auto h-11 p-2 transition-all duration-200 hover:scale-125 bg-blue-600 rounded-sm text-white font-bold'
+          >
+            Agregar nuevo elemento
+          </button>
+        </section>
       </section>
     </LayoutNavbar>
   );

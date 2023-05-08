@@ -1,30 +1,31 @@
 /* eslint-disable @next/next/no-img-element */
-import dashboard from '@/store/dashboard';
+import { useTask } from '@/Context/TaskBard';
 
-type PropsItemMenu = {
+type PropsItemGallery = {
+  identify: string;
+  id: string;
   imagen?: string;
 };
 
-function ItemMenu({ imagen }: PropsItemMenu) {
-  const { newItemMenu } = dashboard((state) => state);
-
-  const newItem = () => {
-    newItemMenu({ imagen: '/default/menu.webp' });
-  };
+function ItemGallery({ identify, imagen, id }: PropsItemGallery) {
+  const { deleteItemMenu, deleteItemEvents } = useTask();
+  const deleteItem = identify === 'menu' ? deleteItemMenu : deleteItemEvents;
 
   return (
-    <section className='style3d w-auto h-3/5 bg-white rounded-3xl flex flex-row-reverse shadowDefault'>
+    <section className='style3d w-full sizeContenedor rounded-3xl flex flex-row-reverse shadowDefault'>
       {/* BOTON PARA NUEVO ELEMENTO */}
       <button
         type='button'
-        onClick={newItem}
-        className='text-2xl font-bold menuNew transition-all rounded-lg shadowDefault'
+        onClick={() => {
+          deleteItem(id);
+        }}
+        className='text-2xl font-bold menuNew transition-all rounded-lg shadowDefault hover:bg-red-700 hover:text-white'
       >
-        +
+        X
       </button>
 
       {/* IMAGEN CON BOTON DE CAMBIAR IMAGEN */}
-      <div className='size-img-menu style3d'>
+      <div className='style3d w-full h-full'>
         <img
           className='rounded-3xl size-img-menu z-0 opacity-90'
           src={imagen || '/default/menu.webp'}
@@ -41,4 +42,4 @@ function ItemMenu({ imagen }: PropsItemMenu) {
   );
 }
 
-export default ItemMenu;
+export default ItemGallery;
