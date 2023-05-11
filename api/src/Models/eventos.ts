@@ -1,13 +1,15 @@
 import { Document, Schema, model } from 'mongoose';
 
 export interface IEvento extends Document {
-  fecha: Date;
-  idFoto: string;
+  inicio: Date;
+  fin: Date;
+  imagen: string;
 }
 
 const eventoSchema = new Schema({
-  fecha: { type: Date, required: true },
-  idFoto: { type: String, required: true },
+  inicio: { type: Date, required: true },
+  fin: { type: Date, required: true },
+  imagen: { type: String, required: true },
 });
 
 export default model<IEvento>('Evento', eventoSchema);

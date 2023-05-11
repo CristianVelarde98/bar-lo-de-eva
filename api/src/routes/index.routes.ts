@@ -3,6 +3,7 @@ import authentication from '@network/authentication';
 // eslint-disable-next-line import/no-unresolved
 import userRouter from './user.route';
 import menuRouter from './menu.route';
+import newsletterRouter from './newsletter.route';
 
 // * Networks
 
@@ -16,6 +17,7 @@ const routes: tipadoRouter[] = [
   { path: '/auth', router: authentication },
   { path: '/users', router: userRouter },
   { path: '/menu', router: menuRouter },
+  { path: '/newsletter', router: newsletterRouter },
 ];
 
 function configureRoutes(server: Express) {
