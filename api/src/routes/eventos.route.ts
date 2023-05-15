@@ -1,7 +1,11 @@
 import express from 'express';
 import { IEvento } from '@/Models/eventos';
-import Joi from 'joi';
-import { traerEventos, agregarEvento } from '../Controllers/eventos';
+import {
+  traerEventos,
+  agregarEvento,
+  eliminarEvento,
+} from '../Controllers/eventos';
+import { string } from 'joi';
 
 const router = express.Router();
 
@@ -29,18 +33,20 @@ router.post('/', async (req, res) => {
     const respuesta: string = await agregarEvento(nuevoEvento);
     res.status(200).json(respuesta);
   } catch (error) {
-    console.log(error);
-
     res.status(400).json({ error: (error as Error).message });
   }
 });
 
-router.post('/ahh', (req, res) => {
-  console.log('algo llego');
-
-  console.log(req.body);
-
-  res.json('hola');
+router.delete('/', async (req, res) => {
+  const { id } = req.query;
+  try {
+    if (!id) throw new Error('falta parametro id');
+    if (typeof id !== 'string') throw new Error('id invalido');
+    const respuesta: string = await eliminarEvento(id);
+    res.status(200).json(respuesta);
+  } catch (error) {
+    res.status(400).json({ error: (error as Error).message });
+  }
 });
 
 export default router;

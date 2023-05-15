@@ -43,3 +43,19 @@ export async function agregarEvento(eventoAgregar: eventoAux): Promise<string> {
     throw new Error('Error al cargar la imagen en Cloudinary');
   }
 }
+
+export async function eliminarEvento(id: string): Promise<string> {
+  try {
+    const eventoAEliminar: IEvento | null = await Evento.findByIdAndDelete(id)
+      .lean()
+      .exec();
+    if (!eventoAEliminar) throw new Error('El evento especificado no existe');
+    await cloudinary.uploader.destroy(eventoAEliminar.imagen);
+    return 'Evento eliminado con éxito';
+  } catch (error) {
+    throw new Error(
+      (error as Error).message ||
+        'Error al finalizar la operación en Cloudinary, inténtalo de nuevo más tarde'
+    );
+  }
+}
