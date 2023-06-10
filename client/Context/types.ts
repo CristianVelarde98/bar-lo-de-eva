@@ -1,6 +1,10 @@
 /* eslint-disable no-unused-vars */
 import { ReactNode } from 'react';
 
+export type ScreenSize = {
+  isMobile: boolean;
+};
+
 export type ItemsMenuType = {
   _id: string;
   imagen: string;
