@@ -1,12 +1,14 @@
 import Link from 'next/link';
 // import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import Image from 'next/image';
-import { ScreenSize } from '@/Context/types';
 import BtnNavBar from './BtnNavbar/BtnNavbar';
+import contextMain from '@/Context/contextMain';
 
-function Navbar({ isMobile }: ScreenSize) {
-  // const router = useRouter();
+function Navbar() {
+  const { isMobile } = useContext(contextMain);
+  console.log(isMobile);
+
   const [isListOpen, setIsListOpen] = useState(false);
 
   const stateList = {
