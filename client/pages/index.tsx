@@ -3,6 +3,8 @@ import HomePage from '@/components/Mainpage/homePage';
 
 export default function Home() {
   const [isMobile, setIsMobile] = useState(false);
+
+  // CATARING ----> es otra ruta
   useEffect(() => {
     function handleReSize() {
       if (window.innerWidth < 768) {

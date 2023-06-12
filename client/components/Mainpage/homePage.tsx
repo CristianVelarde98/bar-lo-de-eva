@@ -12,7 +12,7 @@ function HomePage({ isMobile }: ScreenSize) {
           </section>
         ) : (
           <Image
-            src='/homepage/homebg.webp'
+            src='/bg-landing.webp'
             alt='background'
             className='brightness-50 -z-10 object-cover'
             priority
@@ -21,6 +21,7 @@ function HomePage({ isMobile }: ScreenSize) {
           />
         )}
       </div>
+      {/* Black logo for the landing page responsive */}
       <div className='flex items-center justify-center flex-col lg:mt-24'>
         {isMobile ? (
           <div className='w-64 h-64 bg-black rounded-full flex justify-center items-center'>
@@ -35,6 +36,7 @@ function HomePage({ isMobile }: ScreenSize) {
             </div>
           </div>
         ) : (
+          // if the enviroment is an normal desktop then use this div for landing page
           <div className='w-7/12 h-1/5 flex items-center justify-center text-center lg:text-8xl border-dotted border-4 lg:border-custom border-white fuente-custom md:w-5/12 md:h-1/6 lg:w-2/6 lg:h-2/6 sm:w-2/6'>
             <div className='w-9/12 h-30 text-4xl justify-center items-center  border-b-4 lg:border-b-8 border-dotted border-slate-50 flex text-white sm:text-5xl md:w-8/12 lg:w-80 lg:text-8xl md:text-6xl'>
               LO DE EVA
