@@ -19,6 +19,7 @@ class LayoutNavbar extends React.Component<PropsChildren, stateLayout> {
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
     alert(`Error en LayoutNavbar: ${error} ${errorInfo}`);
+    console.log('Estoy dando error');
     Router.push('/');
   }
 
