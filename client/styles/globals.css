@@ -224,3 +224,12 @@
   width: 35px;
   height: 35px;
 }
+
+ul.open {
+  animation: slideIn 0.3s ease forwards;
+}
+
+/* Oculta la lista cuando está cerrada */
+ul.closed {
+  display: none;
+}

@@ -1,31 +1,33 @@
 import React, { useContext, useState, useEffect } from 'react';
-import contextMain from './contextMain';
+import ContextMain from './contextMain';
 
 export function Provider({ children }: { children: React.ReactNode }) {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const changeSize = () => {
-      if (window.innerWidth < 640 && window.innerHeight < 1024) {
+    function handleReSize() {
+      if (window.innerWidth < 768) {
         setIsMobile(true);
       } else {
         setIsMobile(false);
       }
+    }
+    window.addEventListener('resize', handleReSize);
+    return () => {
+      window.removeEventListener('resize', handleReSize);
     };
-    changeSize();
-    window.addEventListener('resize', changeSize, { passive: false });
-    return () => window.removeEventListener('resize', changeSize);
   }, []);
 
+  // eslint-disable-next-line react/jsx-no-constructed-context-values
   const contextValue = {
     isMobile,
   };
 
   return (
-    <contextMain.Provider value={contextValue}>{children}</contextMain.Provider>
+    <ContextMain.Provider value={contextValue}>{children}</ContextMain.Provider>
   );
 }
 
 export const useMainProvider = () => {
-  useContext(contextMain);
+  useContext(ContextMain);
 };
