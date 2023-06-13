@@ -1,5 +1,9 @@
 /* eslint-disable no-unused-vars */
-import { ReactNode } from 'react';
+import React, { ReactNode } from 'react';
+
+export type handlerSetPage = (
+  Event: React.MouseEvent<HTMLButtonElement>
+) => void;
 
 export type ScreenSize = {
   isMobile: boolean;
