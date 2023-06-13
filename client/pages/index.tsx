@@ -1,28 +1,24 @@
-import { useEffect, useState } from 'react';
-import HomePage from '@/components/Mainpage/homePage';
+import { useContext } from 'react';
+import ContextMain from '@/Context/contextMain';
+import Landing from '@/components/landingPage/landing';
 
 export default function Home() {
-  const [isMobile, setIsMobile] = useState(false);
+  const { isMobile } = useContext(ContextMain);
 
-  // CATARING ----> es otra ruta
-  useEffect(() => {
-    function handleReSize() {
-      if (window.innerWidth < 768) {
-        setIsMobile(true);
-      } else {
-        setIsMobile(false);
-      }
-    }
-    window.addEventListener('resize', handleReSize);
-    return () => {
-      window.removeEventListener('resize', handleReSize);
-    };
-  }, []);
   return (
     <main className='flex min-h-screen flex-col items-center justify-between'>
       <section className='w-screen h-screen relative'>
-        <HomePage isMobile={isMobile} />
+        <Landing isMobile={isMobile} />
       </section>
+      {/* <section className='w-screen h-screen relative'>
+        <Landing isMobile={isMobile} />
+      </section>
+      <section className='w-screen h-screen relative'>
+        <Landing isMobile={isMobile} />
+      </section>
+      <section className='w-screen h-screen relative'>
+        <Landing isMobile={isMobile} />
+      </section> */}
     </main>
   );
 }
