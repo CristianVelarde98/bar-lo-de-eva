@@ -33,7 +33,7 @@ router.put('/', async (req, res) => {
   try {
     if (!req.body.id) throw new Error('falta el campo id');
     const respuesta: string = await modificarPlato(req.body);
-    res.status(200).json(respuesta);
+    res.status(200).json({ mensaje: respuesta });
   } catch (error) {
     res.status(400).json({ error: (error as Error).message });
   }
@@ -47,7 +47,7 @@ router.delete('/', async (req, res) => {
   try {
     if (!req.query.id) throw new Error('falta el campo id');
     const respuesta: string = await eliminarPlato(id);
-    res.status(200).json(respuesta);
+    res.status(200).json({ mensaje: respuesta });
   } catch (error) {
     res.status(400).json({ error: (error as Error).message });
   }

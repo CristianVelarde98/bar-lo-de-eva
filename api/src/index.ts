@@ -23,8 +23,6 @@ app.use(
 
 // funcion encarga de todo el router de la api
 
-app.use('/eventos', eventosRouter);
-
 configureRoutes(app);
 
 interface MongooseConnectionResponse {

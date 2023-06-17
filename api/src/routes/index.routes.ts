@@ -4,6 +4,7 @@ import authentication from '@network/authentication';
 import userRouter from './user.route';
 import menuRouter from './menu.route';
 import newsletterRouter from './newsletter.route';
+import eventosRouter from './eventos.route';
 
 // * Networks
 
@@ -18,6 +19,7 @@ const routes: tipadoRouter[] = [
   { path: '/users', router: userRouter },
   { path: '/menu', router: menuRouter },
   { path: '/newsletter', router: newsletterRouter },
+  { path: '/eventos', router: eventosRouter },
 ];
 
 function configureRoutes(server: Express) {

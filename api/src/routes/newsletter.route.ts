@@ -34,7 +34,7 @@ router.post('/enviar', async (req, res) => {
   try {
     const nuevoEvento = await eventoSchema.validateAsync(req.body);
     const cadena = await enviarCadena(nuevoEvento);
-    res.status(200).json(cadena);
+    res.status(200).json({ mensaje: cadena });
   } catch (error) {
     res.status(400).json({ error: (error as Error).message });
   }

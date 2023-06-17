@@ -5,7 +5,6 @@ import {
   agregarEvento,
   eliminarEvento,
 } from '../Controllers/eventos';
-import { string } from 'joi';
 
 const router = express.Router();
 
@@ -31,7 +30,7 @@ router.post('/', async (req, res) => {
   try {
     const nuevoEvento: eventoAux = req.body;
     const respuesta: string = await agregarEvento(nuevoEvento);
-    res.status(200).json(respuesta);
+    res.status(200).json({ mensaje: respuesta });
   } catch (error) {
     res.status(400).json({ error: (error as Error).message });
   }
@@ -43,7 +42,7 @@ router.delete('/', async (req, res) => {
     if (!id) throw new Error('falta parametro id');
     if (typeof id !== 'string') throw new Error('id invalido');
     const respuesta: string = await eliminarEvento(id);
-    res.status(200).json(respuesta);
+    res.status(200).json({ mensaje: respuesta });
   } catch (error) {
     res.status(400).json({ error: (error as Error).message });
   }
