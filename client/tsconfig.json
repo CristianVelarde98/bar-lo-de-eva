@@ -17,6 +17,7 @@
     "paths": {
       "@/*": ["./*"],
       "@/components/*": ["./components/*"],
+      "@/ui/*": ["./components/ui/*"],
       "@/pages": ["./pages/*"],
       "@/context": ["./Context/*"],
       "@/types": ["./types/*"]
