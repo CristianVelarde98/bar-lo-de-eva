@@ -2,11 +2,16 @@
   "extends": ["next/core-web-vitals", "airbnb", "plugin:prettier/recommended"],
   "plugins": ["prettier"],
   "rules": {
+    "react/function-component-definition": "off",
+    "import/no-extraneous-dependencies": "off",
     "react/react-in-jsx-scope": "off",
     "react/jsx-filename-extension": "off",
     "import/no-unresolved": "off",
     "import/extensions": "off",
     "prettier/prettier": "error",
-    "react/require-default-props": "off"
+    "react/require-default-props": "off",
+    "jsx-a11y/heading-has-content": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/prop-types": "off"
   }
 }
