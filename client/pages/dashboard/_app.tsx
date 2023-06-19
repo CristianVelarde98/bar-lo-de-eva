@@ -1,19 +1,20 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable react/jsx-props-no-spreading */
-import { NextComponentType, NextPageContext } from 'next';
-import TaskProvider from '@/components/TaskProvider';
+import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
+import type { PropsDashboardApp } from '@/types/Dashboard';
+import LayoutNavbar from '@/components/Layout/LayoutNavbar';
 
-interface PropsDashboardApp {
-  Component: NextComponentType<NextPageContext, any, any>;
-  pageProps: any;
-}
+const queryClient = new QueryClient();
 
 export default function DashboardApp({
   Component,
   pageProps,
 }: PropsDashboardApp) {
   return (
-    <TaskProvider>
-      <Component {...pageProps} />
-    </TaskProvider>
+    <QueryClientProvider client={queryClient}>
+      <LayoutNavbar>
+        <Component {...pageProps} />
+      </LayoutNavbar>
+    </QueryClientProvider>
   );
 }

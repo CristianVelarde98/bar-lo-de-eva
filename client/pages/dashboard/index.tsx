@@ -1,12 +1,8 @@
 import React from 'react';
 // * Components
-import LayoutNavbar from '@/pages/dashboard/layout';
-import { useTask } from '@/Context/TaskBard';
+import LayoutNavbar from '@/components/Layout/LayoutNavbar';
 
 function Dashboard() {
-  const contexto = useTask();
-  console.log('🚀 ~ file: index.tsx:8 ~ Dashboard ~ contexto:', contexto);
-
   return (
     <LayoutNavbar>
       <section className='w-full h-full flex-col flex items-center justify-center bg-lime-600'>

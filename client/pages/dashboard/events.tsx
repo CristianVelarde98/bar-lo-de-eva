@@ -11,7 +11,7 @@ import '@splidejs/react-splide/css/core';
 
 // * Components
 import Temporizador from '@/components/Temporizer';
-import LayoutNavbar from '@/pages/dashboard/layout';
+import LayoutNavbar from '@/components/Layout/LayoutNavbar';
 import { useTask } from '@/Context/TaskBard';
 import ItemGallery from '@/components/ItemGallery';
 
