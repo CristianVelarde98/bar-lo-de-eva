@@ -1,5 +1,4 @@
 /* eslint-disable @next/next/no-img-element */
-import { useTask } from '@/Context/TaskBard';
 
 type PropsItemGallery = {
   identify: string;
@@ -8,7 +7,6 @@ type PropsItemGallery = {
 };
 
 function ItemGallery({ identify, imagen, id }: PropsItemGallery) {
-  const { deleteItemMenu, deleteItemEvents } = useTask();
   const deleteItem = identify === 'menu' ? deleteItemMenu : deleteItemEvents;
 
   return (
