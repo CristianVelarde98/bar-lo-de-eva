@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+@keyframes scroll {
+  0% {
+    left: 0;
+  }
+  100% {
+    left: -100%;
+  }
+}
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -233,3 +242,12 @@ ul.open {
 ul.closed {
   display: none;
 }
+
+html{
+  --scroll-behavior: smooth!important;
+    scroll-behavior: smooth!important;
+  }
+  
+.animate{
+    animation: scroll 20s linear infinite;
+  }

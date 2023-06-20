@@ -1,15 +1,11 @@
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { useContext, useState } from 'react';
 import Image from 'next/image';
-import BtnNavBar from './BtnNavbar/BtnNavbar';
-import contextMain from '@/Context/contextMain';
+import { useState, useRef, useEffect } from 'react';
+import Link from 'next/link';
+import BtnNavbar from './utils/btnNavbar';
 
 function Navbar() {
-  const { isMobile } = useContext(contextMain);
-  const router = useRouter();
-
-  const [isListOpen, setIsListOpen] = useState(false);
+  const [isListOpen, setListOpen] = useState(false);
+  const navBarRef = useRef(null);
 
   const stateList = {
     open: 'open',
@@ -17,7 +13,7 @@ function Navbar() {
   };
   const openList = isListOpen ? stateList.open : stateList.closed;
 
-  const navbarDesktop = [
+  const navbarData = [
     {
       path: '/#Home',
       name: 'Inicio',
@@ -40,15 +36,27 @@ function Navbar() {
     },
   ];
 
-  console.log(isMobile, 'Funcionando 💖');
-
-  const options = () => {
-    setIsListOpen(!isListOpen);
+  const handleClickOutside = (event: any) => {
+    console.log(navBarRef.current.contains(event.target), 'Abr ☪🛐');
+    if (navBarRef.current && !navBarRef.current.contains(event.target)) {
+      setListOpen(false);
+    }
   };
 
+  const options = () => {
+    setListOpen(!isListOpen);
+  };
+
+  useEffect(() => {
+    document.addEventListener('click', handleClickOutside);
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  });
+
   return (
-    <nav className='w-screen h-14 sm:h-20 bg- bg-black text-white fixed z-30 flex'>
-      {isMobile ? (
+    <nav className='w-screen text-white fixed z-30 flex' ref={navBarRef}>
+      <div className='w-full h-full text-white flex items-center justify-around min-w-[320px] max-w-[425px] sm:hidden bg-black'>
         <div className='inline-block w-screen z-50'>
           <button type='button' className='p-4 bg-black' onClick={options}>
             <svg
@@ -70,59 +78,57 @@ function Navbar() {
           <div className='bg-white h-full w-16 flex items-center justify-center float-right'>
             <Image
               src='/logo/evaLogoNegro1.webp'
-              width={40}
-              height={40}
               alt='Imagen no encontrada'
+              width={50}
+              height={50}
+              className='object-contain'
+              sizes='100vw'
+              //   style={{ width: '80%', height: 'auto' }}
             />
           </div>
           {/* Ternario para abrir o cerrar la lista segun el estado */}
-          {isListOpen ? (
+          {isListOpen && (
             <ul
               className={`absolute top-0 right-0 left-auto z-50 text-black w-full h-5/6 flex-col text-center items-center justify-center ${openList}`}
             >
-              <li className='h-14 w-full bg-slate-200 grid items-center hover:bg-slate-300'>
+              <li
+                className='h-14 w-full bg-slate-200 grid items-center hover:bg-slate-300'
+                key='close'
+              >
                 <button
                   type='button'
                   className=' w-14 h-full bg-slate-300 float-left'
                   onClick={options}
+                  key='x'
                 >
                   X
                 </button>
               </li>
               {/* {Lista de botones} */}
-              {navbarDesktop.map((a) => {
-                return <BtnNavBar route={a.path} message={a.name} />;
+              {navbarData.map((a) => {
+                return (
+                  <BtnNavbar route={a.path} message={a.name} key={a.name} />
+                );
               })}
             </ul>
-          ) : null}
+          )}
         </div>
-      ) : (
-        <ul className='flex justify-center w-full text-sm z-20'>
-          <li className='mr-14 text-white items-center flex justify-center lg:text-lg'>
-            <Link
-              className='flex justify-center items-center w-full h-full hover:text-stone-400'
-              href={router.pathname === '/' ? '#Home' : '/#Home'}
-              scroll={false}
-            >
-              Home
+      </div>
+      <div className='w-full h-20 bg-black hidden sm:flex justify-center items-center relative'>
+        <ul className='h-full w-full flex justify-center items-center'>
+          <li className='w-32 m-4 h-full items-center flex justify-center'>
+            <Link href='/#Home' scroll={false} type='button'>
+              Inicio
             </Link>
           </li>
-          <li className='mr-14 text-white items-center flex justify-center lg:text-lg hover:text-stone-400'>
-            <Link
-              className='flex justify-center items-center  w-full h-full'
-              href={router.pathname === '/' ? '#Menu' : '/#Menu'}
-              scroll={false}
-            >
+          <li className='w-32 m-4 h-full items-center flex justify-center'>
+            <Link href='/#Menu' scroll={false} type='button'>
               Menu
             </Link>
           </li>
-          <li className='h-28 w-28 lg:h-32 lg:w-32  bg-black rounded-full flex justify-center items-center lg:text-lg '>
-            <Link
-              href={router.pathname === '/' ? '#Home' : '/#Home'}
-              scroll={false}
-              as='image'
-            >
-              <div className='h-24 w-24 lg:h-28 lg:w-28 bg-white rounded-full flex justify-center items-center'>
+          <li className='h-32 w-32 m-8 bg-black rounded-full flex justify-around items-center mt-20'>
+            <Link href='#Home' scroll={false}>
+              <div className='h-28 w-28 bg-white rounded-full flex justify-center items-center'>
                 <Image
                   src='/logo/evaLogoNegro1.webp'
                   width={70}
@@ -133,35 +139,20 @@ function Navbar() {
               </div>
             </Link>
           </li>
-          <li className='ml-14 text-white items-center flex justify-center lg:text-lg hover:text-stone-400'>
-            <Link
-              className='flex justify-center items-center w-full h-full'
-              href={router.pathname === '/' ? '#events' : '/#events'}
-              scroll={false}
-            >
+          <li className='w-32 m-4 h-full items-center flex justify-center'>
+            <Link href='/#Eventos' scroll={false} type='button'>
               Eventos
             </Link>
           </li>
-          <li className='ml-14 text-white items-center flex justify-center lg:text-lg hover:text-stone-400'>
-            <Link
-              className='flex justify-center items-center w-full h-full'
-              href='/#location'
-              scroll={false}
-            >
-              Ubicanos
+          <li className='w-32 m-4 h-full items-center flex justify-center'>
+            <Link href='/#Ubicacion' scroll={false} type='button'>
+              Ubicacion
             </Link>
           </li>
         </ul>
-      )}
-      {/* {!isMobile ? (
-        <button
-          type='button'
-          className='absolute right-0 m-9 bg-red-300 md:hidden'
-        >
-          Hola COMO ESTA?
-        </button>
-      ) : null} */}
+      </div>
     </nav>
   );
 }
+
 export default Navbar;
