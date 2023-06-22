@@ -101,11 +101,6 @@
   background-color: rgba(0, 0, 0, 0.463);
 }
 
-.navbarRest {
-  width: calc(100% - 60px);
-  margin-left: 60px;
-}
-
 .bg-menu {
   background: rgba(190, 190, 190, 0.8);
 }
@@ -212,18 +207,11 @@
 
 /* ANIMATION NAVBAR */
 
-.containerAll {
-  display: flex;
-  flex-direction: row;
-  overflow: hidden;
-}
-
 .containerNabvar {
   z-index: 20;
   position: absolute;
   top: 0;
   left: 0;
-  width: 70px;
   height: 100vh;
   background: black;
   display: flex;
