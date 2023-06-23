@@ -1,15 +1,26 @@
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { MdArrowForwardIos } from 'react-icons/md';
 import Carousel from './utils/carousel';
 
 export default function EventPage() {
   const [open, setOpen] = useState(false);
+  const [image, setImage] = useState('');
+
+  const CloudinaryData = async () => {
+    const res = await fetch('http://localhost:3030/eventos?eventos=todos');
+    const data = await res.json();
+    setImage(data);
+  };
 
   const hanlderArrow = () => {
     setOpen(!open);
   };
 
+  useEffect(() => {
+    CloudinaryData();
+  }, []);
+  console.log(image);
   return (
     <div className=' w-full h-full flex items-center justify-center'>
       <div className='w-full h-full bg-black sm:hidden'>
@@ -26,7 +37,12 @@ export default function EventPage() {
             className='bg-white w-5/6 h-1/3 focus:outline-none text-xl text-center justify-center items-center'
             placeholder='Introduce tu correo...'
           />
-          <button className='bg-red-600 w-1/2 h-1/3 rounded-md m-2'>Suscribirse</button>
+          <button
+            type='button'
+            className='bg-red-600 w-1/2 h-1/3 rounded-md m-2'
+          >
+            Suscribirse
+          </button>
         </div>
       </div>
 
