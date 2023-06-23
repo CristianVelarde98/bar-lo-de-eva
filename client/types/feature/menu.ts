@@ -1,11 +1,24 @@
-import { TColumnMenu } from '../services/menu';
+// import { TColumnMenu } from '../services/menu';
+
+export type TItemMenu = {
+  id: string;
+  nombre: string;
+  descripcion: string;
+  precio: number;
+};
+
+export type TItemMenuInitialValues = {
+  nombre: string;
+  descripcion: string;
+  precio: number;
+};
 
 export type TDashItemsColumnsProps = {
   column: string;
-  dataset: TColumnMenu;
+  dataset: TItemMenu;
 };
 
 export type TDashColumnsProps = {
-  column: string;
-  dataset: TColumnMenu[];
+  column: 'column1' | 'column2';
+  dataset: TItemMenu[];
 };
