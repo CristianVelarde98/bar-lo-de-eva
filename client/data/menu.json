@@ -1,88 +1,70 @@
 {
   "column1": [
     {
-      "_id": "64508d84e27ebccca0310cb3",
+      "id": "64508d86e27ebccca0310cb7",
       "nombre": "fideos con tuco",
       "descripcion": "fideos con tuco, no seas forro",
-      "precio": 1200,
-      "__v": 0
+      "precio": 1200
     },
     {
-      "_id": "64508d86e27ebccca0310cb5",
+      "id": "64508d86e27ebccca0310cb5",
+      "nombre": "polentafaa",
+      "descripcion": "hola mi pana",
+      "precio": 20770
+    },
+    {
+      "id": "64508df53540442d69e5948e",
       "nombre": "polentafaa",
       "descripcion": "tusghsgo",
-      "precio": 20770,
-      "__v": 0
+      "precio": 20770
     },
     {
-      "_id": "64508df53540442d69e5948e",
+      "id": "64508e023540442d69e59490",
       "nombre": "polentafaa",
       "descripcion": "tusghsgo",
-      "precio": 20770,
-      "__v": 0
+      "precio": 20456770
     },
     {
-      "_id": "64508e023540442d69e59490",
+      "id": "6450953ebe1c6004f21c13e4",
       "nombre": "polentafaa",
       "descripcion": "tusghsgo",
-      "precio": 20456770,
-      "__v": 0
+      "precio": 20770
     },
     {
-      "_id": "6450953ebe1c6004f21c13e4",
+      "id": "645096b9764852e757711632",
       "nombre": "polentafaa",
       "descripcion": "tusghsgo",
-      "precio": 20770,
-      "__v": 0
+      "precio": 20770
     },
     {
-      "_id": "645096b9764852e757711632",
-      "nombre": "polentafaa",
-      "descripcion": "tusghsgo",
-      "precio": 20770,
-      "__v": 0
-    },
-    {
-      "_id": "645949e78809a26fa6f4bd14",
+      "id": "645949e78809a26fa6f4bd14",
       "nombre": "fideos con tuco",
       "descripcion": "fideos con tuco, no seas forro",
-      "precio": 1200,
-      "__v": 0
+      "precio": 1200
     },
     {
-      "_id": "648224b08de52a06797c47cf",
+      "id": "648224b08de52a06797c47cf",
       "nombre": "fideos con tuco",
       "descripcion": "fideos con tuco, no seas forro",
-      "precio": 1200,
-      "__v": 0
+      "precio": 1200
     },
     {
-      "_id": "648224c68de52a06797c47d1",
+      "id": "648224c68de52a06797c47d1",
       "nombre": "fideos con tuco",
       "descripcion": "fideos con tuco, no seas forro",
-      "precio": 1200,
-      "__v": 0
+      "precio": 1200
     },
     {
-      "_id": "648224e78de52a06797c47d4",
+      "id": "648224e78de52a06797c47d4",
       "nombre": "fideos con tuco",
       "descripcion": "fideos con tuco, no seas forro",
-      "precio": 1200,
-      "__v": 0
+      "precio": 1200
     },
     {
-      "_id": "648225138de52a06797c47d6",
+      "id": "648225138de52a06797c47d6",
       "nombre": "fideos con tuco",
       "descripcion": "fideos con tuco, no seas forro",
-      "precio": 1200,
-      "__v": 0
-    },
-    {
-      "_id": "64837a91b598bca2f661f874",
-      "nombre": "fideos con tuco",
-      "descripcion": "fideos con tuco, no seas forro",
-      "precio": 1200,
-      "__v": 0
+      "precio": 1200
     }
   ],
   "column2": [
