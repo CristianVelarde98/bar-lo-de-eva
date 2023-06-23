@@ -4,7 +4,6 @@ import * as yup from 'yup';
 import { Formik, Form } from 'formik';
 import { Ban, PlusCircle } from 'lucide-react';
 import { Button } from '@/ui/button';
-import InputsText from './Inputs/InputsText';
 
 // TODO: mueve los tipados a la carpeta types
 
@@ -12,7 +11,7 @@ type WindowsFormProps<T> = {
   isOpen: boolean;
   children: React.ReactNode;
   initialValues: T;
-  validationSchema: any;
+  validationSchema: yup.ObjectSchema<any>;
   handleSubmit: (values: T) => void;
   onClose: () => void;
   title?: string;
