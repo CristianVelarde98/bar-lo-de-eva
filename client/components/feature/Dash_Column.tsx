@@ -1,32 +1,40 @@
 import React from 'react';
 import * as yup from 'yup';
 import { CopyPlus } from 'lucide-react';
-import DashItemsColumns from './Dash_ItemsColumns';
-import { TDashColumnsProps } from '@/types/feature/menu';
+import {
+  TDashColumnsProps,
+  TItemMenuInitialValues,
+} from '@/types/feature/menu';
 import { Button } from '@/ui/button';
 import WindowsForm from '@/shared/WindowsForm';
 import InputsText from '@/shared/Inputs/InputsText';
 import useWindowsModel from '@/Hooks/useWindowsModel';
-
-// TODO: mover los tipados para
-type TItemMenu = {
-  nombre: '';
-  descripcion: '';
-  precio: 0;
-};
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { addMenuC1, addMenuC2 } from '@/services/api';
+import DashItemsColumns from './Dash_ItemsColumns';
 
 const DashColumn: React.FC<TDashColumnsProps> = ({ dataset, column }) => {
+  const queryClient = useQueryClient();
   const [isOpen, handleOpen, handleClose] = useWindowsModel(false);
+  const addItemMutationC1 = useMutation({
+    mutationFn: addMenuC1,
+    onSuccess: () => {
+      queryClient.invalidateQueries(['menu']);
+    },
+  });
+  const addItemMutationC2 = useMutation({
+    mutationFn: addMenuC2,
+    onSuccess: () => {
+      queryClient.invalidateQueries(['menu']);
+    },
+  });
 
-  const handleSubmit = (values: TItemMenu) => {
-    // eslint-disable-next-line no-console
-    console.log(
-      '🚀 ~ file: Dash_Column.tsx:17 ~ handleSubmit ~ values: ',
-      values
-    );
+  const handleSubmit = (values: TItemMenuInitialValues) => {
+    if (column === 'column1') addItemMutationC1.mutate(values);
+    else addItemMutationC2.mutate(values);
     handleClose();
   };
-  const initialValues: TItemMenu = {
+  const initialValues: TItemMenuInitialValues = {
     nombre: '',
     descripcion: '',
     precio: 0,
@@ -43,8 +51,7 @@ const DashColumn: React.FC<TDashColumnsProps> = ({ dataset, column }) => {
   return (
     <section className='h-max flex flex-col gap-2'>
       {dataset.map((item) => (
-        // eslint-disable-next-line no-underscore-dangle
-        <DashItemsColumns key={item._id} dataset={item} column={column} />
+        <DashItemsColumns key={item.nombre} dataset={item} column={column} />
       ))}
       <Button
         onClick={handleOpen}
