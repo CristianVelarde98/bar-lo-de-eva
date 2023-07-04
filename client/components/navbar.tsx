@@ -122,28 +122,25 @@ function Navbar() {
   ];
 
   return (
-    <section className='containerAll'>
-      <section
-        style={{ width: mouse ? '250px' : '70px' }}
-        className='containerNabvar'
-        onMouseEnter={handleOnMouseEnter}
-        onMouseLeave={handleOnMouseLeave}
-      >
-        {opciones.map((element) => (
-          <Link
-            key={element.name}
-            href={`/dashboard${element.path.toLowerCase()}`}
+    <section
+      className={`containerNabvar ${mouse ? 'w-60' : 'w-16'}`}
+      onMouseEnter={handleOnMouseEnter}
+      onMouseLeave={handleOnMouseLeave}
+    >
+      {opciones.map((element) => (
+        <Link
+          key={element.name}
+          href={`/dashboard${element.path.toLowerCase()}`}
+        >
+          <button
+            type='button'
+            className={`${mouse ? 'openNavbar' : 'closeNavbar'} font-bold`}
           >
-            <button
-              type='button'
-              className={`${mouse ? 'openNavbar' : 'closeNavbar'} font-bold`}
-            >
-              {element.img}
-              <h1>{element.name}</h1>
-            </button>
-          </Link>
-        ))}
-      </section>
+            {element.img}
+            <h1>{element.name}</h1>
+          </button>
+        </Link>
+      ))}
     </section>
   );
 }
