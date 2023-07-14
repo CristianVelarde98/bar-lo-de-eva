@@ -10,6 +10,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { Button } from '@/ui/button';
 
+// TODO: move to folder types
 type OptionsNavbar = {
   path: string;
   name: string;
@@ -53,7 +54,7 @@ function Navbar() {
 
   return (
     <section
-      className='bg-black w-[60px] h-screen flex items-center justify-center transition-all absolute top-0 left-0'
+      className='bg-black w-[60px] h-screen flex items-center justify-center transition-all absolute top-0 left-0 z-10'
       style={{ width: mouse ? '250px' : '70px' }}
       onMouseEnter={handleOnMouseEnter}
       onMouseLeave={handleOnMouseLeave}
