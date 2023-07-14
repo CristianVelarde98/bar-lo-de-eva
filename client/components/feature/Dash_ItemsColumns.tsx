@@ -2,6 +2,7 @@
 import React, { FC } from 'react';
 import { Edit, XCircle } from 'lucide-react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import * as yup from 'yup';
 import type { TDashItemsColumnsProps, TItemMenu } from '@/types/feature/menu';
 import {
   deleteMenuC1,
@@ -18,7 +19,6 @@ import {
   CardHeader,
   CardTitle,
 } from '@/ui/card';
-import * as yup from 'yup';
 import useWindowsModel from '@/Hooks/useWindowsModel';
 import InputsText from '@/shared/Inputs/InputsText';
 

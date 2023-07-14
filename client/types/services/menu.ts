@@ -1,3 +1,5 @@
+import { TItemMenu } from '@/types/feature/menu';
+
 export type TColumnMenu = {
   _id: string;
   nombre: string;
@@ -7,6 +9,6 @@ export type TColumnMenu = {
 };
 
 export type TMenu = {
-  column1: TColumnMenu[];
-  column2: TColumnMenu[];
+  column1: TItemMenu[];
+  column2: TItemMenu[];
 };
