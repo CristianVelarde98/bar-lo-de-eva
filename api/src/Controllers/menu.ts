@@ -29,6 +29,7 @@ export async function modificarPlato(plato: IMenu) {
       nombre: plato.nombre ? plato.nombre : aux.nombre,
       precio: plato.precio ? plato.precio : aux.precio,
       descripcion: plato.descripcion ? plato.descripcion : aux.descripcion,
+      columna: plato.columna ? plato.columna : aux.columna,
     };
     await Menu.findByIdAndUpdate(
       { _id: otroId },

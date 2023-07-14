@@ -4,6 +4,7 @@ export interface IMenu extends Document {
   nombre: string;
   descripcion: string;
   precio: number;
+  columna: number;
 }
 
 const menuSchema = new Schema<IMenu>({
@@ -19,6 +20,12 @@ const menuSchema = new Schema<IMenu>({
   precio: {
     type: Number,
     required: true,
+  },
+  columna: {
+    type: Number,
+    required: true,
+    min: 1,
+    max: 2,
   },
 });
 

@@ -27,7 +27,7 @@ class LayoutNavbar extends React.Component<PropsChildren, stateLayout> {
     return (
       <section className='flex flex-row w-screen h-screen'>
         <Navbar />
-        <section className='h-full w-full flex items-center justify-center ml-16 overflow-y-auto overflow-x-hidden'>
+        <section className='pl-[60px] w-full h-full flex items-center justify-center navbarRest overflow-y-auto'>
           {children}
         </section>
       </section>
