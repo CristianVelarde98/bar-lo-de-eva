@@ -17,6 +17,9 @@
     "paths": {
       "@/*": ["./*"],
       "@/components/*": ["./components/*"],
+      "@/feature/*": ["./components/feature/*"],
+      "@/layout/*": ["./components/Layout/*"],
+      "@/shared/*": ["./components/Shared/*"],
       "@/ui/*": ["./components/ui/*"],
       "@/pages": ["./pages/*"],
       "@/context": ["./Context/*"],
