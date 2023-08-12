@@ -1,24 +1,21 @@
-import { useQuery } from '@tanstack/react-query';
 // import Image from 'next/image';
 import React from 'react';
+import { TEventsItem } from '@/types/services/api';
 
-function EventsCard() {
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ['events'],
-    queryFn: () => {
-      console.log('hola');
-    },
-  });
+type TEventsCard = {
+  dataset: TEventsItem[];
+};
 
-  if (isLoading) return <>Loading...</>;
-  if (isError) return <div>Error</div>;
-
+const EventsCard: React.FC<TEventsCard> = ({ dataset }) => {
   return (
     <section>
-      {/* <Image width={420} height={420} src={} /> */}
-      {JSON.stringify(data)}
+      {dataset.map((item: TEventsItem) => (
+        <div>
+          <h1>{item.imagen}</h1>
+        </div>
+      ))}
     </section>
   );
-}
+};
 
 export default EventsCard;

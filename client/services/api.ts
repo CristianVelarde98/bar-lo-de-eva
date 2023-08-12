@@ -1,9 +1,9 @@
 import axios, { AxiosResponse } from 'axios';
-import type { TMenu } from '@/types/services/menu';
+import type { TEventsItem, TMenu } from '@/types/services/api';
 import type { TItemMenu, TItemMenuInitialValues } from '@/types/feature/menu';
 
 const Api = axios.create({
-  baseURL: 'http://localhost:3031',
+  baseURL: 'http://localhost:3030',
   withCredentials: true,
 });
 
@@ -95,6 +95,17 @@ export const puthMenuC2 = async (menuItem: TItemMenu): Promise<void> => {
       `/column2/${menuItem.id}`,
       menuItem
     );
+    return response.data;
+  } catch (error: unknown) {
+    if (error instanceof Error) throw new Error(error.message);
+    else throw new Error('error desconocido');
+  }
+};
+
+// EVENTS
+export const getEvents = async (): Promise<TEventsItem[]> => {
+  try {
+    const response: AxiosResponse = await Api.get('eventos?eventos=todos');
     return response.data;
   } catch (error: unknown) {
     if (error instanceof Error) throw new Error(error.message);

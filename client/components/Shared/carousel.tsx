@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ChevronRight, ChevronLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
+// TODO: move to folder types
 type TCarouselProps = {
   children: React.ReactNode;
 };
@@ -23,7 +24,7 @@ const Carousel: React.FC<TCarouselProps> = ({ children }) => {
       {/* ARROW BUTTON LEFT */}
       <Button
         variant='ghost'
-        size='icon'
+        size='sm'
         onClick={handleLefttItem}
         className='absolute top-1/2 -translate-x-1/2 left-12'
       >
@@ -34,7 +35,7 @@ const Carousel: React.FC<TCarouselProps> = ({ children }) => {
       {/* ARROW BUTTON RIGHT */}
       <Button
         variant='ghost'
-        size='icon'
+        size='sm'
         onClick={handleRightItem}
         className='absolute top-1/2 -translate-x-1/2 right-5'
       >
