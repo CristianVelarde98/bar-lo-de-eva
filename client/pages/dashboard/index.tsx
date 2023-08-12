@@ -1,5 +1,5 @@
 import React from 'react';
-import Carousel from '@/components/shared/carousel';
+import Carousel from '@/components/Shared/carousel';
 import { Input } from '@/components/ui/input';
 
 function Dashboard() {
