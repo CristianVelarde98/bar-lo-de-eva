@@ -16,6 +16,8 @@ interface Evento {
   descripcion: string;
 }
 
+const { MAIL, PASS } = process.env
+
 const enviarMail = async (
   destinatario: string[],
   contenido: string,
@@ -25,13 +27,13 @@ const enviarMail = async (
     host: 'smtp.gmail.com',
     port: 587,
     auth: {
-      user: 'cristianvelardefx@gmail.com',
-      pass: 'lyltkadpadvhiytd',
+      user: MAIL,
+      pass: PASS,
     },
   });
 
   const mensaje: Mensaje = {
-    from: 'cristianvelardefx@gmail.com',
+    from: MAIL || "lodeevab@gmail.com",
     to: destinatario,
     subject: encabezado,
     html: contenido,

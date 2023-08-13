@@ -15,6 +15,8 @@ const eventoSchema = Joi.object({
 });
 
 router.post('/suscribirse', async (req, res) => {
+  console.log("pasamos por aca");
+  
   try {
     if (!validator.validate(req.body.gmail)) {
       throw new Error('El correo electrónico no es válido');
