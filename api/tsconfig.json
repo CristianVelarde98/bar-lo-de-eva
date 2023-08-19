@@ -14,11 +14,15 @@
     "noEmit": true,
     "paths": {
       "@/*": ["src/*"],
-      "@models/*": ["src/Models/*"],
+      "@cloudinary/*": ["src/Cloudinary/*"],
       "@controllers/*": ["src/Controllers/*"],
+      "@database/*": ["src/database/*"],
       "@helpers/*": ["src/Helpers/*"],
-      "@store/*": ["src/Store/*"],
-      "@network/*": ["src/Network/*"]
+      "@middleware/*": ["src/Middleware/*"],
+      "@models/*": ["src/Models/*"],
+      "@network/*": ["src/Network/*"],
+      "@router/*": ["src/routes/*"],
+      "@store/*": ["src/Store/*"]
     }
   },
   "include": ["src"],
