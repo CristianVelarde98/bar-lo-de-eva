@@ -10,7 +10,7 @@ type ArgVery = {
 
 export function isEmpty(arg: Arg) {
   for (const key in arg) {
-    if (arg[key].length === 0)
+    if (arg[key].length === 0 || arg[key] === undefined)
       throw new Error(`400-El campo ${key} esta vacio`);
   }
 }
