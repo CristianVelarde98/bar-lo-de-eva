@@ -18,8 +18,8 @@ import type { PageObjectResponse } from '@notionhq/client/build/src/api-endpoint
  * NotionModel se encargar de manejar la base de datos para notion
  */
 class NotionModel {
-  private schema: Record<string, any>;
-  private NOTION_PRODUCTS_ID: string;
+  private readonly schema: Record<string, any>;
+  private readonly NOTION_PRODUCTS_ID: string;
   /**
    * Inicializar los datos para el Schema
    * @example const ProductSchema = new NotionSchema({
@@ -52,7 +52,6 @@ class NotionModel {
       return result;
     }, {} as Record<string, any>);
   }
-
   /**
    * Agrega datos a Notion siguiendo el esquema definido, procesando los valores de acuerdo a los tipos definidos.
    * @param data Un array de objetos que contienen propiedades y valores a agregar en Notion.
@@ -61,7 +60,10 @@ class NotionModel {
    * @example const NewItem = await ProductNotion.schemaNotion([{ property: 'NameProduct', value: 'duvan rozo' }])
    */
   public async createNewItem(data: TSchemaNotion[]) {
-    return await this.addNotionItem(this.converterItem(data));
+    return await postNotionItem(
+      this.NOTION_PRODUCTS_ID,
+      this.converterItem(data)
+    );
   }
 
   public async findAll(options?: TSortsFilterItems) {
@@ -70,12 +72,7 @@ class NotionModel {
       options?.filter,
       options?.sorts
     );
-    const allItems: Record<string, any> = [];
-    response.forEach((item) => {
-      const objectPage = item as PageObjectResponse;
-      allItems.push(this.getValues(objectPage));
-    });
-    return allItems;
+    return response.map((item) => this.getValues(item as PageObjectResponse));
   }
 
   public async finOneById(id: number) {
@@ -83,8 +80,6 @@ class NotionModel {
       this.NOTION_PRODUCTS_ID,
       id
     )) as PageObjectResponse;
-    if (response === null)
-      throw new Error(`error al obtener el elemento ${id}`);
     return this.getValues(response);
   }
 
@@ -102,19 +97,15 @@ class NotionModel {
     const item = await this.finOneById(id);
     if (item === null) throw new Error('Error al obtener el producto');
     if (typeof item === 'string') throw new Error('formato inesperado');
-    const conver = this.converterItem(newData);
-    console.log('paso2');
-    return await updateNotionItem(String(item.key), conver);
+    return await updateNotionItem(
+      String(item.key),
+      this.converterItem(newData)
+    );
   }
 
   public async deleteNotionItemById(id: number) {
     const item = await this.finOneById(id);
-    if (typeof item === 'string') throw new Error('formato inesperado');
     return await deleteNotionItem(item);
-  }
-
-  public async addNotionItem(newItem: Record<string, any>) {
-    return await postNotionItem(this.NOTION_PRODUCTS_ID, newItem);
   }
 }
 

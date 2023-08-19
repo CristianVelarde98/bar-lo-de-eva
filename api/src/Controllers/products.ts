@@ -1,6 +1,6 @@
 import ProductSchema from '@models/notion_products';
 import { TSchemaNotion } from '@/types/notion';
-import { findProperties } from '@helpers/errors';
+import { findErrorPropertiesAsync, isEmptyAsync } from '@helpers/errors';
 import { convertTSchemaNotion } from '@helpers/notionModels';
 import type { controllerHttp } from '@/types/helper/response';
 import type { TProductItem, TQueryProduct } from '@/types/notion_products';
@@ -9,50 +9,47 @@ export const CProductGet = async (
   options: TQueryProduct
 ): Promise<controllerHttp> => {
   const propertyCurrent = String(options.property);
-  let message: any;
 
   if (options.id !== undefined) {
-    message = await ProductSchema.finOneById(options.id);
-  }
-
-  if (options.sort !== undefined) {
-    const columnPromises = ['Column1', 'Column2'].map((column) =>
-      ProductSchema.findAll({
-        filter: {
-          property: 'TypeColumn',
-          select: {
-            equals: column,
-          },
-        },
-        sorts: [
-          {
-            property: propertyCurrent,
-            direction: options.sort,
-          },
-        ],
-      })
-    );
-
-    const [column1Results, column2Results] = await Promise.all(columnPromises);
-
-    message = {
-      column1: column1Results,
-      column2: column2Results,
+    return {
+      message: await ProductSchema.finOneById(options.id),
     };
   }
 
-  return {
-    message: message,
-  };
+  const columnPromises = ['Column1', 'Column2'].map((column) =>
+    ProductSchema.findAll({
+      filter: {
+        property: 'TypeColumn',
+        select: {
+          equals: column,
+        },
+      },
+      sorts:
+        options.sort !== undefined
+          ? [{ property: propertyCurrent, direction: options.sort }]
+          : [],
+    })
+  );
+
+  const [column1, column2] = await Promise.all(columnPromises);
+  return { message: { column1, column2 } };
 };
 
 export const CProductPost = async (
   product: TProductItem
 ): Promise<controllerHttp> => {
-  findProperties(
-    ['NameProduct', 'Description', 'Price', 'TypeColumn'],
-    product
-  );
+  await Promise.all([
+    findErrorPropertiesAsync(
+      ['NameProduct', 'Description', 'Price', 'TypeColumn'],
+      product
+    ),
+    isEmptyAsync([
+      product.NameProduct,
+      product.Description,
+      product.Price,
+      product.TypeColumn,
+    ]),
+  ]);
   const existProduct: Record<string, any> = await ProductSchema.findAll({
     filter: {
       property: 'NameProduct',
@@ -61,42 +58,49 @@ export const CProductPost = async (
       },
     },
   });
-  if (existProduct.length === 0) {
-    const dataProduct: TSchemaNotion[] = convertTSchemaNotion(product);
-    const newProduct = await ProductSchema.createNewItem(dataProduct);
-    return { message: newProduct };
-  }
-  return { message: 'elemento ya existe' };
+  if (existProduct.length > 0) return { message: 'elemento ya existe' };
+  const dataProduct: TSchemaNotion[] = convertTSchemaNotion(product);
+  const newProduct = await ProductSchema.createNewItem(dataProduct);
+  return { message: newProduct };
 };
 
 export const CProductUpdate = async (
   product: TProductItem
 ): Promise<controllerHttp> => {
   const { ID, ...productWhioutID } = product;
-  findProperties(
-    ['NameProduct', 'Description', 'Price', 'TypeColumn'],
-    productWhioutID
-  );
-  if (ID === undefined)
-    throw new Error('requiere id para actualizar el producto');
+  const promises = await Promise.all([
+    findErrorPropertiesAsync(
+      ['NameProduct', 'Description', 'Price', 'TypeColumn'],
+      productWhioutID
+    ),
+    isEmptyAsync([
+      product.NameProduct,
+      product.Description,
+      product.Price,
+      product.TypeColumn,
+      ID,
+    ]),
+  ]);
+
   const dataProduct: TSchemaNotion[] = convertTSchemaNotion(productWhioutID);
   const updateProduct = await ProductSchema.updateNotionItemById(
     Number(ID),
     dataProduct
   );
-
   if (updateProduct === null)
     throw new Error('No se pudo actualizar el Producto');
+
   return { message: updateProduct };
 };
 
 export const CProductDelete = async (
   query: Record<string, any>
 ): Promise<controllerHttp> => {
-  findProperties(['id'], query);
-  const exist = await ProductSchema.finOneById(Number(query.id));
-  if (Object.keys(exist).length === 0)
-    throw new Error(`El elemento con el id ${query.id} no existe`);
+  await Promise.all([
+    findErrorPropertiesAsync(['id'], query),
+    isEmptyAsync([query]),
+  ]);
+  await ProductSchema.finOneById(Number(query.id));
   const deleteProduct = await ProductSchema.deleteNotionItemById(query.id);
   if (deleteProduct === null)
     throw new Error('no se pudo eliminar el producto');

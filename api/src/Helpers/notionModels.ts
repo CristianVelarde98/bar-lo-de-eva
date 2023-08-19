@@ -93,10 +93,11 @@ export const getNotionAll = async (
       filter: filterOptions,
       sorts: sortsOptions,
     });
+    if (response.results.length === 0) return [];
     return response.results;
   } catch (error) {
-    if (error instanceof Error) throw new Error(`Error: ${error.message}`);
-    return [];
+    if (error instanceof Error) throw new Error(error.message);
+    else throw new Error('Error inesperado');
   }
 };
 // obtener producto por ID
@@ -111,12 +112,12 @@ export const getByIdNotion = async (notionID: string, id: number) => {
         },
       },
     });
-
-    if (query.results.length === 0) return [];
+    if (query.results.length === 0)
+      throw new Error(`El elemento con el id ${id} no existe`);
     return query.results[0];
   } catch (error: unknown) {
-    if (error instanceof Error) return `Error: ${error.message}`;
-    return null;
+    if (error instanceof Error) throw new Error(error.message);
+    else throw new Error('Error inesperado');
   }
 };
 // actualizar producto por id
@@ -138,17 +139,13 @@ export const updateNotionItem = async (
 // eliminar producto por id
 export const deleteNotionItem = async (item: Record<string, any>) => {
   try {
-    if (item === null) throw new Error('Error al obtener el producto');
-    if (item.key === null)
-      throw new Error('Error al obtener la key del producto');
-
-    await notion.blocks.delete({
-      block_id: item.key,
-    });
+    const { key } = item;
+    if (!key) throw new Error('Error al obtener la key del producto');
+    await notion.blocks.delete({ block_id: key });
     return `Se elimino correctamente`;
   } catch (error: unknown) {
-    if (error instanceof Error) throw new Error(`Error: ${error.message}`);
-    return null;
+    if (error instanceof Error) throw new Error(error.message);
+    else throw new Error('Error inesperado');
   }
 };
 
