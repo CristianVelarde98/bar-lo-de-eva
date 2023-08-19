@@ -3,6 +3,7 @@ client/node_modules
 
 api/pnpm-lock.yaml
 api/.env
+api/dist
 
 client/.next/
 client/.next

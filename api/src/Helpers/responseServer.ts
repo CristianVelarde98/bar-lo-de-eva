@@ -18,9 +18,13 @@ export type controllerHeader = {
  * @throws {Error} envia una respuesta con su status correspondiente y el mensaje del error de la peticion
  * @description - si no quieres enviar status y/o mensaje de la peticion habran respuesta predeterminas para cuando no envies ninguna de las 2, pero deberas return un objeto vacio "return {}"
  * @example
+ * @deprecated
  * sendServe(response,() => controllador(body.user,body.password))
  */
-export async function sendServe(response: Response, controller: () => Promise<controller>) {
+export async function sendServe(
+  response: Response,
+  controller: () => Promise<controller>
+) {
   try {
     const { statusOk, message }: controller = await controller();
     response.status(statusOk || 200).send(message || 'peticion sin mensage');
@@ -31,13 +35,21 @@ export async function sendServe(response: Response, controller: () => Promise<co
       .send(customError[1] || 'error fatal server');
   }
 }
-
-export async function sendServeHeader(response: Response, controllerFunc: () => Promise<controllerHeader>) {
+/**
+ * @deprecated
+ * @param response
+ * @param controllerFunc
+ */
+export async function sendServeHeader(
+  response: Response,
+  controllerFunc: () => Promise<controllerHeader>
+) {
   try {
-    const { statusOk, token, message }: controllerHeader = await controllerFunc();
+    const { statusOk, token, message }: controllerHeader =
+      await controllerFunc();
     response
       .status(statusOk || 200)
-      .setHeader("Set-Cookie", token)
+      .setHeader('Set-Cookie', token)
       .send({
         success: message,
       });

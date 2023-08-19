@@ -1,4 +1,4 @@
-import Newsletter, { INewsletter } from '../Models/newsletter.ts';
+import Newsletter, { INewsletter } from '@models/newsletter.ts';
 
 const nodemailer = require('nodemailer');
 

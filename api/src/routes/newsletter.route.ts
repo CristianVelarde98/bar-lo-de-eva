@@ -1,6 +1,6 @@
 import express from 'express';
-import { INewsletter } from '../Models/newsletter.ts';
-import { agregarSub, enviarCadena } from '../Controllers/newsletter.ts';
+import { INewsletter } from '@models/newsletter.ts';
+import { agregarSub, enviarCadena } from '@controllers/newsletter.ts';
 import Joi from 'joi';
 
 const validator = require('email-validator');

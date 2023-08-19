@@ -1,5 +1,5 @@
-import Evento, { IEvento } from '../Models/eventos.ts';
-const { cloudinary } = require('../Cloudinary/cloudinary.ts');
+import Evento, { IEvento } from '@models/eventos.ts';
+const { cloudinary } = require('@cloudinary/cloudinary.ts');
 
 interface eventoAux {
   inicio: Date;
