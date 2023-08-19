@@ -1,11 +1,11 @@
 import express from 'express';
-import { IMenu } from '../Models/menu.ts';
+import { IMenu } from '@models/menu.ts';
 import {
   agregarPlato,
   traerMenu,
   modificarPlato,
   eliminarPlato,
-} from '../Controllers/menu.ts';
+} from '@controllers/menu.ts';
 
 const router = express.Router();
 

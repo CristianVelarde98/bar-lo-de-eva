@@ -1,10 +1,10 @@
 import express from 'express';
-import { IEvento } from '@/Models/eventos';
+import { IEvento } from '@models/eventos';
 import {
   traerEventos,
   agregarEvento,
   eliminarEvento,
-} from '../Controllers/eventos';
+} from '@controllers/eventos';
 
 const router = express.Router();
 

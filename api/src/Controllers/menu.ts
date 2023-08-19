@@ -1,5 +1,5 @@
 import { ObjectId } from 'mongodb';
-import Menu, { IMenu } from '../Models/menu.ts';
+import Menu, { IMenu } from '@models/menu.ts';
 
 export async function traerMenu(): Promise<IMenu[]> {
   try {

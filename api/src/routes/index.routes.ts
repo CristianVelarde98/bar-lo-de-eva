@@ -1,25 +1,23 @@
 import { Router, Express } from 'express';
 import authentication from '@network/authentication';
-// eslint-disable-next-line import/no-unresolved
-import userRouter from './user.route';
-import menuRouter from './menu.route';
-import newsletterRouter from './newsletter.route';
-import eventosRouter from './eventos.route';
+import productsRouter from '@network/products';
+import userRouter from '@router/user.route';
+import menuRouter from '@router/menu.route';
+import newsletterRouter from '@router/newsletter.route';
+import eventosRouter from '@router/eventos.route';
 
-// * Networks
-
-// mas facil y escalable segun yo
-type tipadoRouter = {
+type TRouter = {
   path: string;
   router: Router;
 };
 
-const routes: tipadoRouter[] = [
+const routes: TRouter[] = [
   { path: '/auth', router: authentication },
   { path: '/users', router: userRouter },
   { path: '/menu', router: menuRouter },
   { path: '/newsletter', router: newsletterRouter },
   { path: '/eventos', router: eventosRouter },
+  { path: '/product', router: productsRouter },
 ];
 
 function configureRoutes(server: Express) {

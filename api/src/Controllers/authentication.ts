@@ -1,5 +1,5 @@
 import { isEmpty, regexVery } from '@helpers/validate';
-import { controllerHeader, controller } from '@/Helpers/responseServer';
+import { controllerHeader, controller } from '@helpers/responseServer';
 import { signinStore, signupStore } from '@store/authentication';
 /**
  * Función para iniciar sesión de usuario.
