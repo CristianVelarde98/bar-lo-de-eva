@@ -5,25 +5,38 @@ import userRouter from '@router/user.route';
 import menuRouter from '@router/menu.route';
 import newsletterRouter from '@router/newsletter.route';
 import eventosRouter from '@router/eventos.route';
+import mongooseServer from '@/database/mongoose';
 
 type TRouter = {
   path: string;
   router: Router;
 };
 
-const routes: TRouter[] = [
-  { path: '/auth', router: authentication },
-  { path: '/users', router: userRouter },
-  { path: '/menu', router: menuRouter },
-  { path: '/newsletter', router: newsletterRouter },
-  { path: '/eventos', router: eventosRouter },
-  { path: '/product', router: productsRouter },
-];
+const routesVersions: Record<string, TRouter[]> = {
+  v1: [
+    { path: '/auth', router: authentication },
+    { path: '/users', router: userRouter },
+    { path: '/menu', router: menuRouter },
+    { path: '/newsletter', router: newsletterRouter },
+    { path: '/eventos', router: eventosRouter },
+  ],
+  v2: [{ path: '/product', router: productsRouter }],
+};
 
-function configureRoutes(server: Express) {
-  routes.forEach(({ path, router }) => {
-    server.use(path, router);
+/**
+ * configureRoutes permite inicializar los endpoints con su respectiva version
+ * @param server
+ * @param version
+ * @description cuando se una la v1 el requerira la funcion mongooseServer la v2 no la requerira
+ */
+function configureRoutes(server: Express, version: string) {
+  const selectedRoutes = routesVersions[version] || [];
+  if (selectedRoutes.length === 0)
+    throw new Error(`version no encontrada ${version}`);
+  selectedRoutes.forEach(({ path, router }) => {
+    server.use(`/api/${version}${path}`, router);
   });
+  if (version === 'v1') mongooseServer();
 }
 
 export default configureRoutes;

@@ -9,19 +9,19 @@ export const CProductGet = async (
   options: TQueryProduct
 ): Promise<controllerHttp> => {
   const propertyCurrent = String(options.property);
-  let succes: Record<string, any> = [];
-  if (options.id !== undefined)
-    return {
-      message: await ProductSchema.finOneById(options.id),
-    };
+  let message: any;
 
-  if (options.sort !== undefined)
-    succes = {
-      column1: await ProductSchema.findAll({
+  if (options.id !== undefined) {
+    message = await ProductSchema.finOneById(options.id);
+  }
+
+  if (options.sort !== undefined) {
+    const columnPromises = ['Column1', 'Column2'].map((column) =>
+      ProductSchema.findAll({
         filter: {
           property: 'TypeColumn',
           select: {
-            equals: 'Column1',
+            equals: column,
           },
         },
         sorts: [
@@ -30,25 +30,19 @@ export const CProductGet = async (
             direction: options.sort,
           },
         ],
-      }),
-      column2: await ProductSchema.findAll({
-        filter: {
-          property: 'TypeColumn',
-          select: {
-            equals: 'Column2',
-          },
-        },
-        sorts: [
-          {
-            property: propertyCurrent,
-            direction: options.sort,
-          },
-        ],
-      }),
+      })
+    );
+
+    const [column1Results, column2Results] = await Promise.all(columnPromises);
+
+    message = {
+      column1: column1Results,
+      column2: column2Results,
     };
+  }
 
   return {
-    message: succes,
+    message: message,
   };
 };
 

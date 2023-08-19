@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-import NotionSchema from '@database/schema';
+import NotionSchema from '@database/schemaNotion';
 dotenv.config();
 const { NOTION_PRODUCTS_ID } = process.env;
 

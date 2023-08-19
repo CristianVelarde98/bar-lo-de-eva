@@ -1,4 +1,5 @@
 import configureRoutes from '@router/index.routes';
+import mongooseServer from '@database/mongoose';
 import eventosRouter from '@router/eventos.route';
 import { testNotion } from '@helpers/notionModels';
 import express from 'express';
@@ -19,7 +20,10 @@ app.use(
   })
 );
 
-configureRoutes(app);
+// * api v1 and api v2
+// configureRoutes(app, 'v1');
+configureRoutes(app, 'v2');
+
 app.listen(PORT, () => {
   console.log(`Servidor escuchando en el puerto ${PORT}`);
 });
