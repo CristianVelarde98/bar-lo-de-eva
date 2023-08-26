@@ -1,5 +1,6 @@
 import {
   convertObject,
+  convertTSchemaNotion,
   deleteNotionItem,
   getByIdNotion,
   getNotionAll,
@@ -27,7 +28,13 @@ class NotionModel {
    *    Description: { type: 'rich_text'}
    * });
    */
-  constructor(schema: Record<string, any>, NOTION_PRODUCTS_ID: string) {
+  constructor(
+    schema: Record<string, any>,
+    NOTION_PRODUCTS_ID: string | undefined
+  ) {
+    if (NOTION_PRODUCTS_ID === undefined)
+      throw new Error('error con el ID de la base de datos');
+
     this.schema = schema;
     this.NOTION_PRODUCTS_ID = NOTION_PRODUCTS_ID;
   }
@@ -59,10 +66,10 @@ class NotionModel {
    * @async
    * @example const NewItem = await ProductNotion.schemaNotion([{ property: 'NameProduct', value: 'duvan rozo' }])
    */
-  public async createNewItem(data: TSchemaNotion[]) {
+  public async createNewItem(data: Record<string, any>) {
     return await postNotionItem(
       this.NOTION_PRODUCTS_ID,
-      this.converterItem(data)
+      this.converterItem(convertTSchemaNotion(data))
     );
   }
 
@@ -93,13 +100,13 @@ class NotionModel {
    * @example const model = new NotionModel;
    * model.updateNotionItemById(id,[{ property: 'NameProduct', value: 'Nombre' }]);
    */
-  public async updateNotionItemById(id: number, newData: TSchemaNotion[]) {
+  public async updateNotionItemById(id: number, newData: Record<string, any>) {
     const item = await this.finOneById(id);
     if (item === null) throw new Error('Error al obtener el producto');
     if (typeof item === 'string') throw new Error('formato inesperado');
     return await updateNotionItem(
       String(item.key),
-      this.converterItem(newData)
+      this.converterItem(convertTSchemaNotion(newData))
     );
   }
 

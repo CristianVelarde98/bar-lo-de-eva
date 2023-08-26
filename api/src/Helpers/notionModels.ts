@@ -47,6 +47,17 @@ export const typesConvert: TypesNotionModel = {
       name: String(value),
     },
   }),
+  date: (value: string | number) => {
+    if (typeof value !== 'string') throw new Error('date valor no valido');
+    const parsedValue = JSON.parse(value);
+    return {
+      type: 'date',
+      date: {
+        start: parsedValue.start,
+        end: parsedValue.end,
+      },
+    };
+  },
 };
 export const convertObject: convertToObject = {
   unique_id: (value: Record<string, any>) =>
@@ -59,25 +70,29 @@ export const convertObject: convertToObject = {
     'number' in value ? Number(value.number) : null,
   select: (value: Record<string, any>) =>
     'select' in value ? value.select.name : null,
+  date: (value: Record<string, any>) => ('date' in value ? value.date : null),
 };
 export const convertTSchemaNotion = (
-  product: Record<string, any>
+  items: Record<string, any>
 ): TSchemaNotion[] =>
-  Object.entries(product).map(
-    ([property, value]: [string, string | number]) => ({
-      property: property,
-      value: String(value),
-    })
-  );
+  Object.entries(items).map(([property, value]: [string, string | number]) => ({
+    property: property,
+    value: String(value),
+  }));
+
 // funcion de prueba
 export const testNotion = async (notionID: string) => {
+  console.log(
+    '🚀 ~ file: notionModels.ts:72 ~ testNotion ~ notionID:',
+    notionID
+  );
   const response = await notion.databases.query({
     database_id: notionID,
   });
   if ('properties' in response.results[0])
     console.log(
-      '🚀 ~ file: notionModels.ts:62 ~ testNotion ~ response:',
-      response.results[0].properties.TypeColumn
+      '🚀 ~ file: notionModels.ts:79 ~ testNotion ~ response.properties:',
+      response.results[0].properties
     );
 };
 
@@ -148,7 +163,6 @@ export const deleteNotionItem = async (item: Record<string, any>) => {
     else throw new Error('Error inesperado');
   }
 };
-
 // agregar nuevo Producto
 export const postNotionItem = async (
   notionID: string,
