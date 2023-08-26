@@ -1,7 +1,5 @@
-import ProductSchema from '@models/notion_products';
-import { TSchemaNotion } from '@/types/notion';
+import ProductSchema from '@/Models/notion/notion_products';
 import { findErrorPropertiesAsync, isEmptyAsync } from '@helpers/errors';
-import { convertTSchemaNotion } from '@helpers/notionModels';
 import type { controllerHttp } from '@/types/helper/response';
 import type { TProductItem, TQueryProduct } from '@/types/notion_products';
 
@@ -59,48 +57,57 @@ export const CProductPost = async (
     },
   });
   if (existProduct.length > 0) return { message: 'elemento ya existe' };
-  const dataProduct: TSchemaNotion[] = convertTSchemaNotion(product);
-  const newProduct = await ProductSchema.createNewItem(dataProduct);
-  return { message: newProduct };
+  return { message: await ProductSchema.createNewItem(product) };
 };
 
 export const CProductUpdate = async (
   product: TProductItem
 ): Promise<controllerHttp> => {
   const { ID, ...productWhioutID } = product;
-  const promises = await Promise.all([
-    findErrorPropertiesAsync(
-      ['NameProduct', 'Description', 'Price', 'TypeColumn'],
+
+  if (!ID) {
+    return { message: 'se requiere de la propiedad ID' };
+  }
+
+  const existProduct = await ProductSchema.finOneById(Number(ID));
+  if (!existProduct) {
+    return { message: 'elemento no existe' };
+  }
+
+  const response: Record<string, any> = {
+    NameProduct: existProduct.NameProduct,
+    Description: existProduct.Description,
+    Price: existProduct.Price,
+    TypeColumn: existProduct.TypeColumn,
+  };
+
+  if (productWhioutID.NameProduct)
+    response.NameProduct = productWhioutID.NameProduct;
+  if (productWhioutID.Description)
+    response.Description = productWhioutID.Description;
+  if (productWhioutID.Price) response.Price = productWhioutID.Price;
+  if (productWhioutID.TypeColumn)
+    response.TypeColumn = productWhioutID.TypeColumn;
+
+  return {
+    message: await ProductSchema.updateNotionItemById(
+      Number(ID),
       productWhioutID
     ),
-    isEmptyAsync([
-      product.NameProduct,
-      product.Description,
-      product.Price,
-      product.TypeColumn,
-      ID,
-    ]),
-  ]);
-
-  const dataProduct: TSchemaNotion[] = convertTSchemaNotion(productWhioutID);
-  const updateProduct = await ProductSchema.updateNotionItemById(
-    Number(ID),
-    dataProduct
-  );
-  if (updateProduct === null)
-    throw new Error('No se pudo actualizar el Producto');
-
-  return { message: updateProduct };
+  };
 };
 
 export const CProductDelete = async (
   query: Record<string, any>
 ): Promise<controllerHttp> => {
-  await Promise.all([
-    findErrorPropertiesAsync(['id'], query),
-    isEmptyAsync([query]),
-  ]);
-  await ProductSchema.finOneById(Number(query.id));
+  if (!query.id) throw new Error('require id');
+
+  const numberId = Number(query.id);
+  isEmptyAsync([numberId]);
+
+  const existProduct = await ProductSchema.finOneById(numberId);
+  if (!existProduct) return { message: 'elemento no existe' };
+
   const deleteProduct = await ProductSchema.deleteNotionItemById(query.id);
   if (deleteProduct === null)
     throw new Error('no se pudo eliminar el producto');

@@ -1,10 +1,5 @@
-import dotenv from 'dotenv';
 import NotionSchema from '@database/schemaNotion';
-dotenv.config();
 const { NOTION_PRODUCTS_ID } = process.env;
-
-if (NOTION_PRODUCTS_ID === undefined)
-  throw new Error('error con el ID de la base de datos');
 
 const ProductSchema = new NotionSchema(
   {
