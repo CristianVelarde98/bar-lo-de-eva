@@ -5,6 +5,7 @@ import userRouter from '@router/user.route';
 import menuRouter from '@router/menu.route';
 import newsletterRouter from '@router/newsletter.route';
 import eventosRouter from '@router/eventos.route';
+import eventsRouter from '@network/events';
 import mongooseServer from '@/database/mongoose';
 
 type TRouter = {
@@ -20,7 +21,10 @@ const routesVersions: Record<string, TRouter[]> = {
     { path: '/newsletter', router: newsletterRouter },
     { path: '/eventos', router: eventosRouter },
   ],
-  v2: [{ path: '/product', router: productsRouter }],
+  v2: [
+    { path: '/product', router: productsRouter },
+    { path: '/events', router: eventsRouter },
+  ],
 };
 
 /**

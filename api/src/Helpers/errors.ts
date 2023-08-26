@@ -1,19 +1,34 @@
 export const findErrorPropertiesAsync = (
-  args: string[],
-  obj: Record<string, any>
-) => {
+  properties: string[],
+  obj: Record<string, any> | undefined
+): Promise<void> => {
   return new Promise((resolve, reject) => {
-    for (const arg of args) {
-      if (!obj.hasOwnProperty(arg)) reject(`propiedad ${arg} no se encontro`);
+    if (!obj) {
+      reject('El objeto es undefined');
+    } else {
+      for (const prop of properties) {
+        if (!obj.hasOwnProperty(prop)) {
+          reject(`La propiedad ${prop} no se encontró`);
+        }
+      }
+      resolve();
     }
-    resolve(true);
+    resolve();
   });
 };
 
-export const isEmptyAsync = (args: any[]) => {
+export const isEmptyAsync = (args: any[] | undefined): Promise<void> => {
   return new Promise((resolve, reject) => {
-    for (const arg of args)
-      if (arg === undefined) reject(`propiedad es undefined`);
-    resolve(true);
+    if (!args) {
+      reject('El array es undefined');
+    } else {
+      for (const arg of args) {
+        if (arg === undefined) {
+          reject('Una propiedad es undefined');
+        }
+      }
+      resolve();
+    }
+    resolve();
   });
 };
