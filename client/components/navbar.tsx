@@ -7,7 +7,7 @@ import {
   PackageSearchIcon,
 } from 'lucide-react';
 import Link from 'next/link';
-import { useState } from 'react';
+// import { useState } from 'react';
 import { Button } from '@/ui/button';
 
 // TODO: move to folder types
@@ -19,15 +19,16 @@ type OptionsNavbar = {
 };
 
 function Navbar() {
-  const [mouse, enterOrLeave] = useState(false);
+  // const [mouse, enterOrLeave] = useState<string>('');
 
-  function handleOnMouseEnter() {
-    enterOrLeave(true);
-  }
+  // const translateHandler = (val: string) => (input: any) => {
+  //   console.log('this')
+  //   console.log(val, input.target.value);
+  // };
 
-  function handleOnMouseLeave() {
-    enterOrLeave(false);
-  }
+  // function handleOnMouseLeave() {
+  //   enterOrLeave(false);
+  // }
 
   const opciones: OptionsNavbar[] = [
     {
@@ -54,17 +55,37 @@ function Navbar() {
 
   return (
     <section
-      className='bg-black w-[60px] h-screen flex items-center justify-center transition-all absolute top-0 left-0 z-10'
-      style={{ width: mouse ? '250px' : '70px' }}
-      onMouseEnter={handleOnMouseEnter}
-      onMouseLeave={handleOnMouseLeave}
+      className='bg-black  h-screen items-center justify-center transition-all absolute top-0 left-0 z-10 w-[25vh] grid grid-rows-4'
+      // style={{ width: mouse ? '' : '' }}
+      // onMouseLeave={handleOnMouseLeave}
     >
-      <section className='w-full flex flex-col gap-4 items-center justify-center'>
+      {opciones.map((element) => (
+        <Link
+          key={element.name}
+          href={`/dashboard${element.path.toLowerCase()}`}
+          // className={`${mouse ? 'w-3/4' : 'w-full'}  delay-500`}
+        >
+          <Button
+            // @ts-ignore
+            value={element.name}
+            variant='ghost'
+            type='button'
+            className={`w-full flex items-center justify-around flex-row text-white font-semibold py-6 hover:text-black hover:bg-white  
+            }`}
+            // onClick={translateHandler}
+            // className={`${mouse ? 'openNavbar' : 'closeNavbar'} font-bold`}
+          >
+            {element.img}
+            {/* <h1>{mouse ? element.name : ''}</h1> */}
+          </Button>
+        </Link>
+      ))}
+      {/* <section className='w-full flex flex-col gap-4 items-center justify-center'>
         {opciones.map((element) => (
           <Link
             key={element.name}
             href={`/dashboard${element.path.toLowerCase()}`}
-            className={`${mouse ? 'w-3/4' : 'w-full'}`}
+            className={`${mouse ? 'w-3/4' : 'w-full'}  delay-500`}
           >
             <Button
               variant='ghost'
@@ -79,7 +100,7 @@ function Navbar() {
             </Button>
           </Link>
         ))}
-      </section>
+      </section> */}
     </section>
   );
 }
