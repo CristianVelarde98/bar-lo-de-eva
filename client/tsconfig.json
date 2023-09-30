@@ -17,10 +17,10 @@
     "paths": {
       "@/*": ["./*"],
       "@/components/*": ["./components/*"],
-      "@/feature/*": ["./components/feature/*"],
-      "@/layout/*": ["./components/Layout/*"],
-      "@/shared/*": ["./components/Shared/*"],
-      "@/ui/*": ["./components/ui/*"],
+      "@/feature/*": ["./components/dashboard/feature/*"],
+      "@/layout/*": ["./components/dashboard/Layout/*"],
+      "@/shared/*": ["./components/dashboard/Shared/*"],
+      "@/ui/*": ["./components/dashboard/ui/*"],
       "@/pages": ["./pages/*"],
       "@/context": ["./Context/*"],
       "@/types": ["./types/*"]

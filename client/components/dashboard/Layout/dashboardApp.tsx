@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 import type { PropsDashboardApp } from '@/types/Dashboard';
-import LayoutNavbar from '@/components/Layout/LayoutNavbar';
+import LayoutNavbar from '@/components/dashboard/Layout/LayoutNavbar';
 
 const queryClient = new QueryClient();
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useField } from 'formik';
-import Input from '@/components/ui/input';
-import Label from '@/components/ui/label';
+import Input from '@/components/dashboard/ui/input';
+import Label from '@/components/dashboard/ui/label';
 
 // TODO mover los tipados
 type TInputsText = {

@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { getMenu } from '@/services/api';
-import DashColumn from '@/components/feature/Dash_Column';
+import DashColumn from '@/components/dashboard/feature/Dash_Column';
 
 function Products() {
   const { data, isLoading, isError } = useQuery({

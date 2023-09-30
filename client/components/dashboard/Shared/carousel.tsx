@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ChevronRight, ChevronLeft } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/dashboard/ui/button';
 
 // TODO: move to folder types
 type TCarouselProps = {

@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { getEvents } from '@/services/api';
-import EventsCard from '@/components/feature/cardContainer/eventsCard';
+import EventsCard from '@/components/dashboard/feature/cardContainer/eventsCard';
 
 function Events() {
   const { data, isLoading, isError } = useQuery({
