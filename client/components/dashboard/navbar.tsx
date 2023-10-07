@@ -5,9 +5,11 @@ import {
   HomeIcon,
   MenuSquareIcon,
   PackageSearchIcon,
+  LogOutIcon,
 } from 'lucide-react';
 import Link from 'next/link';
-// import { useState } from 'react';
+import { useRouter } from 'next/router';
+import axios from 'axios';
 import { Button } from '@/ui/button';
 
 // TODO: move to folder types
@@ -19,16 +21,14 @@ type OptionsNavbar = {
 };
 
 function Navbar() {
-  // const [mouse, enterOrLeave] = useState<string>('');
-
-  // const translateHandler = (val: string) => (input: any) => {
-  //   console.log('this')
-  //   console.log(val, input.target.value);
-  // };
-
-  // function handleOnMouseLeave() {
-  //   enterOrLeave(false);
-  // }
+  const router = useRouter();
+  const Logout = async () => {
+    const removeCookie = await axios.get('/api/logout');
+    const verifyLogOut = removeCookie.data;
+    if (verifyLogOut.logOut) {
+      router.push('/login');
+    }
+  };
 
   const opciones: OptionsNavbar[] = [
     {
@@ -70,7 +70,7 @@ function Navbar() {
             value={element.name}
             variant='ghost'
             type='button'
-            className={`w-full flex items-center justify-around flex-row text-white font-semibold py-6 hover:text-black hover:bg-white  
+            className={`w-full flex items-center justify-around flex-row text-white font-semibold py-6 hover:text-black hover:bg-white
             }`}
             // onClick={translateHandler}
             // className={`${mouse ? 'openNavbar' : 'closeNavbar'} font-bold`}
@@ -80,27 +80,16 @@ function Navbar() {
           </Button>
         </Link>
       ))}
-      {/* <section className='w-full flex flex-col gap-4 items-center justify-center'>
-        {opciones.map((element) => (
-          <Link
-            key={element.name}
-            href={`/dashboard${element.path.toLowerCase()}`}
-            className={`${mouse ? 'w-3/4' : 'w-full'}  delay-500`}
-          >
-            <Button
-              variant='ghost'
-              type='button'
-              className={`w-full flex items-center justify-around flex-row text-white font-semibold py-6 hover:text-black hover:bg-white   ${
-                mouse ? '' : ''
-              }`}
-              // className={`${mouse ? 'openNavbar' : 'closeNavbar'} font-bold`}
-            >
-              {element.img}
-              <h1>{mouse ? element.name : ''}</h1>
-            </Button>
-          </Link>
-        ))}
-      </section> */}
+
+      <Button
+        onClick={Logout}
+        // @ts-ignore
+        variant='ghost'
+        type='button'
+        className='w-full flex items-center justify-around flex-row text-white font-semibold py-6 hover:text-black hover:bg-white'
+      >
+        <LogOutIcon width={40} height={40} color='#f86b6b' />
+      </Button>
     </section>
   );
 }

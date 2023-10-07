@@ -297,3 +297,7 @@
   width: 35px;
   height: 35px;
 }
+
+html{
+  scroll-behavior: smooth;
+}

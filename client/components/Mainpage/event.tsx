@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { MdArrowForwardIos } from 'react-icons/md';
 import Carousel from './utils/carousel';
 // import Temporizer from '../dashboard/Temporizer';
 
@@ -13,19 +12,12 @@ interface dataContainer {
 }
 
 export default function EventPage() {
-  const [open, setOpen] = useState(false);
   const [data, setData] = useState<dataContainer[] | undefined>();
   const dataImgCarousel: string[] | undefined = data?.map((x) => x.imagen);
-  // const dataTimer = data?.map((x)=>{return({ inicio:x.inicio, fin:x.fin})})
-
   const eventData = async () => {
     const res = await fetch('http://localhost:3030/eventos?eventos=todos');
     const resData = await res.json();
     setData(resData);
-  };
-
-  const handlerArrow = (): void => {
-    setOpen(!open);
   };
 
   useEffect(() => {
@@ -60,7 +52,7 @@ export default function EventPage() {
 
       {/* Desktop */}
       <div className='lg:w-[90%] lg:h-[90%]  shadow-lg shadow-slate-500 bg-gradient-to-t from-40% from-blue-200 to-white rounded-2xl overflow-hidden hidden sm:flex items-center justify-center'>
-        <div className={`${open ? 'w-1/2' : 'w-1/4'}  h-full  transition-all`}>
+        <div className='w-1/2 h-full  transition-all'>
           <div className='h-2/6 flex justify-center items-center w-full'>
             <div className='w-[25vh] h-[25vh] bg-red-200 rounded-full overflow-hidden flex items-center justify-center'>
               <Image
@@ -72,7 +64,7 @@ export default function EventPage() {
               />
             </div>
           </div>
-          <div
+          {/* <div
             className={`w-full h-[70%] items-center justify-center ${
               open ? 'hidden' : 'flex'
             }`}
@@ -80,11 +72,9 @@ export default function EventPage() {
             <button type='button' onClick={handlerArrow}>
               <MdArrowForwardIos size={60} />
             </button>
-          </div>
+          </div> */}
           <div
-            className={`h-[70%] w-full flex-col justify-center items-center ${
-              open ? 'flex' : 'hidden'
-            }`}
+            className={`h-[70%] w-full flex-col justify-center items-center flex `}
           >
             <div className='w-full h-1/3 flex items-center justify-center font-extralight'>
               <p className='text-5xl mb-20'>Menu</p>
@@ -116,11 +106,7 @@ export default function EventPage() {
             </div>
           </div>
         </div>
-        <div
-          className={`${
-            open ? 'w-1/2' : 'w-3/4'
-          } h-full flex flex-col justify-center items-center`}
-        >
+        <div className='w-1/2 h-full flex flex-col justify-center items-center'>
           <div className='w-full h-1/5 '>
             {/* <Temporizer startedTime={dataTimer?.inicio} finallyTime={dataTimer?.fin} /> */}
           </div>

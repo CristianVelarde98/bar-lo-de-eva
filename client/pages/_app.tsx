@@ -3,18 +3,8 @@ import '@/styles/globals.css';
 import type { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';
-import localFont from 'next/font/local';
 import DashboardApp from '@/components/dashboard/Layout/dashboardApp';
-
-const localFontRevolution = localFont({
-  src: [
-    {
-      path: '../public/fonts/VivelaRivoluzione.ttf',
-      weight: '200',
-    },
-  ],
-  variable: '--font-revolution',
-});
+import Layout from './layout';
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -27,8 +17,8 @@ export default function App({ Component, pageProps }: AppProps) {
     return <DashboardApp Component={Component} pageProps={pageProps} />;
 
   return (
-    <main className={`overflow-x-hidden ${localFontRevolution.variable}`}>
-      <Component {...pageProps} />;
-    </main>
+    <Layout>
+      <Component {...pageProps} />
+    </Layout>
   );
 }

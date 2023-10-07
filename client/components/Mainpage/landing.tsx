@@ -37,7 +37,14 @@ export default function LandingPage() {
             </Link>
           </div>
         </div>
-        <div className='w-2/5 h-full flex justify-center items-center relative'>
+        <div
+          className='w-2/5 h-full flex justify-center items-center relative'
+          style={{
+            backgroundImage: 'url(/bg-landing.webp)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        >
           <div className='w-60 h-60 flex items-center justify-center overflow-hidden rounded-full bg-black absolute z-10 bg-opacity-80'>
             <Image
               src='/logo/evaLogoBlanco.webp'
@@ -47,12 +54,6 @@ export default function LandingPage() {
               loading='lazy'
             />
           </div>
-          <Image
-            src='/bg-landing.webp'
-            alt='Imagen no encontrada'
-            className='object-cover'
-            fill
-          />
         </div>
       </div>
     </div>
