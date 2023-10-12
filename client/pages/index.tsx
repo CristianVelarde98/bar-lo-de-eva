@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import axios from 'axios';
 
 /*  Components   */
 import EventPage from '@/components/Mainpage/event';
@@ -9,7 +10,7 @@ import ParallaxImg from '@/components/Mainpage/utils/whatsAppButton/parallax';
 import WtspButton from '@/components/Mainpage/utils/whatsAppButton/buttonWtsp';
 import Navbar from '@/components/Mainpage/navbar';
 
-export default function Home() {
+export default function Home({ eventApiData }: { eventApiData: string[] }) {
   return (
     <>
       <WtspButton />
@@ -31,7 +32,7 @@ export default function Home() {
           <ParallaxImg img='eventsBackground.webp' text='Eventos' />
         </section>
         <section className='w-screen h-screen relative' id='Eventos'>
-          <EventPage />
+          <EventPage eventDataApi={eventApiData} />
         </section>
         <section className='w-screen h-[20vh]'>
           <ParallaxImg img='ubicacion.webp' text='Ubicanos' />
@@ -43,3 +44,15 @@ export default function Home() {
     </>
   );
 }
+
+export const getServerSideProps = async () => {
+  const eventApiGetData = await axios.get(
+    'http://localhost:3100/api/v2/events/'
+  );
+  const eventApiData = eventApiGetData.data;
+  return {
+    props: {
+      eventApiData,
+    },
+  };
+};

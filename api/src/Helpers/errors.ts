@@ -23,6 +23,7 @@ export const isEmptyAsync = (args: any[] | undefined): Promise<void> => {
       reject('El array es undefined');
     } else {
       for (const arg of args) {
+        console.log(args,arg);
         if (arg === undefined) {
           reject('Una propiedad es undefined');
         }

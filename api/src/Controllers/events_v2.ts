@@ -48,7 +48,8 @@ export const CEventsGet = async ({
 
 export const CEventsPost = async (events: Request): Promise<controllerHttp> => {
   const { Name, Time } = events.body;
-  const file = events.files?.Image;
+  console.log(Name,Time,'THISTHISTHISHITS')
+  const file = events.files?.image;
   await Promise.all([
     isEmptyAsync([Name, Time, file]),
     findErrorPropertiesAsync(['Name', 'Time'], events.body),
@@ -65,6 +66,7 @@ export const CEventsPost = async (events: Request): Promise<controllerHttp> => {
   if (existProduct.length > 0) return { message: 'elemento ya existe' };
 
   if (file !== undefined && 'tempFilePath' in file) {
+    console.log(file.tempFilePath);
     const { url, publicId } = await uploadImageCloudinary(file.tempFilePath);
     return {
       message: await eventsSchema.createNewItem({
@@ -138,3 +140,7 @@ export const CEventsDelete = async (
 
   return { message: deletedResult };
 };
+
+// export const getAllCloudinaryImages = async(query:any)=>{
+//   get
+// }

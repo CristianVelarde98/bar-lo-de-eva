@@ -17,6 +17,7 @@ export default function LandingPage() {
             <Link
               href='/#Eventos'
               className='animate-pulse text-yellow-400 hover:text-yellow-600'
+              scroll={false}
             >
               Enterate de nuestros proximos eventos
             </Link>
@@ -32,6 +33,7 @@ export default function LandingPage() {
             <Link
               href='/#Eventos'
               className='animate-pulse text-white hover:text-yellow-200'
+              scroll={false}
             >
               Enterate de nuestros proximos eventos
             </Link>

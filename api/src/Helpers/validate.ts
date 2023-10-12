@@ -20,7 +20,7 @@ export function regexVery(arg: ArgVery[]) {
     const validate = new RegExp(iterator.regex);
     if (!validate.test(iterator.property))
       throw new Error(
-        `400-El valor ${iterator.property} no es valido, ${iterator.message}`
+        `401-El valor no es valido, ${iterator.message}`
       );
   }
 }

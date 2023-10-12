@@ -24,4 +24,8 @@ router.delete('/', async (request: Request, response: Response) => {
   responseHttp(response, () => CEventsDelete(request.query));
 });
 
+// router.get('/', async(request: Request, response: Response) => {
+//   responseHttp(response,()=>(request));
+// })
+
 export default router;

@@ -15,13 +15,13 @@ type TRouter = {
 
 const routesVersions: Record<string, TRouter[]> = {
   v1: [
-    { path: '/auth', router: authentication },
-    { path: '/users', router: userRouter },
     { path: '/menu', router: menuRouter },
-    { path: '/newsletter', router: newsletterRouter },
     { path: '/eventos', router: eventosRouter },
   ],
   v2: [
+    { path: '/auth', router: authentication },
+    { path: '/users', router: userRouter },
+    { path: '/newsletter', router: newsletterRouter },
     { path: '/product', router: productsRouter },
     { path: '/events', router: eventsRouter },
   ],
@@ -40,6 +40,7 @@ function configureRoutes(server: Express, version: string) {
   selectedRoutes.forEach(({ path, router }) => {
     server.use(`/api/${version}${path}`, router);
   });
+  mongooseServer();
   if (version === 'v1') mongooseServer();
 }
 

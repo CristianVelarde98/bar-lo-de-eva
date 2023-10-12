@@ -4,6 +4,7 @@ import { ModelAuthSchema, IAuth } from '@models/authentication';
 import { controllerHeader, controller } from '@helpers/responseServer';
 import { serialize } from 'cookie';
 import bcrypt from 'bcryptjs';
+import { UserInterface } from '@/Models/user';
 
 type Authentication = {
   user: string;
@@ -15,6 +16,13 @@ export type returnResponse = {
   token: string;
   messageSuccess?: string;
 };
+
+export interface User {
+  id:string;
+  startedTime:string;
+  iat:number;
+  exp:number;
+}
 
 dotenv.config();
 // ~ ENV
@@ -37,17 +45,16 @@ export async function signinStore({
 
     const startedTime = new Date();
     const tokenJwt = jwt.sign({ id: exists._id, startedTime }, secrect, {
-      expiresIn: 60 * 60 * 6,
+      expiresIn: '1w',
     });
-
-    const token = serialize('auth', tokenJwt, {
-      httpOnly: true,
-    });
-
+    const token = serialize('auth', tokenJwt);
     const response: controllerHeader = {
       statusOk: 200,
       token,
-      message: 'Logeado correctamente',
+      user: {
+        name: exists.user
+      },
+      authenticate: true,
     };
     return response;
   } catch (error: any) {
@@ -77,6 +84,23 @@ export async function signupStore(
       message: 'usuario creado correctamente',
     };
   } catch (error: any) {
+    throw new Error(error.message);
+  }
+}
+
+export async function verifyJWTToken({token}:{token:string}) {
+  if (!secrect) throw new Error('introduce your secret for JWT in .env')
+  if (!token) throw new Error('Taken must be a secret and exists')
+  try {
+    const decodedUri = decodeURIComponent(token).split('=')[1];
+    const decoded = jwt.verify(decodedUri,secrect) as User;
+    const userIsValid = await ModelAuthSchema.findOne<IAuth>({_id:decoded.id})
+    if(!userIsValid) throw new Error('User not found');
+    return {
+      userName: userIsValid.user
+    }
+  }
+  catch (error:any) {
     throw new Error(error.message);
   }
 }

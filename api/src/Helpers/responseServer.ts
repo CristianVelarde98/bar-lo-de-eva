@@ -7,9 +7,14 @@ export type controller = {
 
 export type controllerHeader = {
   statusOk?: number;
-  message?: string;
-  token: string;
+  authenticate:boolean;
+  user?: userResponse;
+  token?: string;
 };
+
+export interface userResponse  {
+  name:string;
+}
 
 /**
  * Función que se encarga de dar respuesta concreta al frontend
@@ -27,9 +32,10 @@ export async function sendServe(
 ) {
   try {
     const { statusOk, message }: controller = await controller();
-    response.status(statusOk || 200).send(message || 'peticion sin mensage');
+    response.status(statusOk || 200).send(message || 'peticion sin mensaje');
   } catch (error: any) {
     const customError = error.message.split('-');
+    console.log(error.message,'THIS');
     response
       .status(Number(customError[0]) || 500)
       .send(customError[1] || 'error fatal server');
@@ -45,13 +51,16 @@ export async function sendServeHeader(
   controllerFunc: () => Promise<controllerHeader>
 ) {
   try {
-    const { statusOk, token, message }: controllerHeader =
+    const { statusOk, token, user, authenticate }: controllerHeader =
       await controllerFunc();
-    response
+      const date = new Date();
+      date.setDate(date.getDate() + 7)
+      response
       .status(statusOk || 200)
-      .setHeader('Set-Cookie', token)
+      .cookie('Auth', token,{httpOnly:true, sameSite:true, expires:date})
       .send({
-        success: message,
+        user: user,
+        authenticate:authenticate
       });
   } catch (error: any) {
     const customError = error.message.split('-');

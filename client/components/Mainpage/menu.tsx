@@ -5,9 +5,9 @@ export default function MenuPage() {
   const [menuData, setMenuData] = useState([]);
 
   const getMenuData = async () => {
-    const res = await fetch('http://localhost:3030/menu');
-    const data = await res.json();
-    setMenuData(data);
+    // const res = await fetch('http://localhost:3030/menu');
+    // const data = await res.json();
+    // setMenuData(data);
   };
   useEffect(() => {
     getMenuData();
@@ -42,7 +42,7 @@ export default function MenuPage() {
             </div>
             <div className='w-full h-full flex items-center justify-center divide-x divide-solid divide-black'>
               <div className='w-1/2 h-full '>
-                <MenuCol menuData={menuData} />
+                {/* <MenuCol menuData={menuData} /> */}
               </div>
               <div className='w-1/2 h-full' />
             </div>

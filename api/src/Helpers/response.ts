@@ -8,14 +8,6 @@ export const responseHttp = async (
   try {
     const { status, message, token }: controllerHttp = await callBack();
     response.status(Number(status) | 200).json(message);
-    /*
-    if (token === undefined)
-    else
-      response
-        .status(Number(status) | 200)
-        .setHeader('Set-Cookie', token)
-        .json(message);
-    */
   } catch (error: unknown) {
     if (error instanceof Error)
       response.status(400).json({

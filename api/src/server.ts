@@ -6,7 +6,7 @@ import express from 'express';
 import cors from 'cors';
 import fileUpload from 'express-fileupload';
 dotenv.config();
-const { PORT, NOTION_EVENTS_ID } = process.env;
+const { PORT } = process.env;
 const app = express();
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
@@ -16,6 +16,7 @@ app.use(
       'http://localhost:3000',
       'http://localhost:5173',
       'http://localhost:3030',
+      'http://localhost:3100'
     ],
     credentials: true,
   })

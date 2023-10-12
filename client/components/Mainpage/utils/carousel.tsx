@@ -1,8 +1,8 @@
 import { Splide, SplideTrack, SplideSlide } from '@splidejs/react-splide';
-import ImageComp from './cloudinaryGet';
+import Image from 'next/image';
+// import ImageComp from './cloudinaryGet';
 
 /*  Splice Styles  */
-
 import '@splidejs/react-splide/css';
 // import '@splidejs/react-splide/css/skyblue';
 import '@splidejs/react-splide/css/sea-green';
@@ -10,14 +10,13 @@ import '@splidejs/react-splide/css/sea-green';
 
 interface props {
   height: string;
-  dataImg: string[] | undefined;
+  dataImg: any | undefined;
 }
 
 export default function Carousel(Props: props) {
   const { height, dataImg } = Props;
   const heightData = height;
-
-  if (!dataImg?.length)
+  if (!dataImg)
     return (
       <div className='text-center bg-white text-xl justify-center items-center flex w-full h-full'>
         Por favor introduce alguna imagen
@@ -40,9 +39,16 @@ export default function Carousel(Props: props) {
     >
       <div style={{ position: 'relative' }}>
         <SplideTrack>
-          {dataImg?.map((a) => (
-            <SplideSlide className='flex item justify-center'>
-              <ImageComp directorio={a} />
+          {dataImg.map((data: any) => (
+            <SplideSlide className='flex item justify-center' key={data.id}>
+              <Image
+                src={data.image}
+                width={800}
+                height={500}
+                alt='Carousel Content'
+                key={data.id}
+              />
+              {/* <ImageComp directorio={image} /> */}
             </SplideSlide>
           ))}
         </SplideTrack>

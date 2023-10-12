@@ -3,7 +3,7 @@ import type { TEventsItem, TMenu } from '@/types/services/api';
 import type { TItemMenu, TItemMenuInitialValues } from '@/types/feature/menu';
 
 const Api = axios.create({
-  baseURL: 'http://localhost:3030',
+  baseURL: 'http://localhost:3100',
   withCredentials: true,
 });
 
@@ -105,7 +105,7 @@ export const puthMenuC2 = async (menuItem: TItemMenu): Promise<void> => {
 // EVENTS
 export const getEvents = async (): Promise<TEventsItem[]> => {
   try {
-    const response: AxiosResponse = await Api.get('eventos?eventos=todos');
+    const response: AxiosResponse = await Api.get('api/v2/events');
     return response.data;
   } catch (error: unknown) {
     if (error instanceof Error) throw new Error(error.message);

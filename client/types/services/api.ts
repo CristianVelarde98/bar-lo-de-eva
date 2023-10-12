@@ -18,9 +18,10 @@ export type TMenu = {
 type ISODateString = `${string}T${string}.000Z`;
 
 export type TEventsItem = {
-  _id: string;
+  ID: string;
+  key: string;
   inicio: ISODateString;
   fin: ISODateString;
-  imagen: string;
+  Image: string;
   __v: 0;
 };

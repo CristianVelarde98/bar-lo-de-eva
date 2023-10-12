@@ -1,29 +1,29 @@
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+// import axios from 'axios';
+// import { useEffect, useState } from 'react';
 import Carousel from './utils/carousel';
 // import Temporizer from '../dashboard/Temporizer';
 
-interface dataContainer {
-  fin: string;
-  imagen: string;
-  inicio: string;
-  _v: number;
-  _id: number;
+interface Time {
+  start: string;
+  end: string;
+  time_zone: string | null;
 }
 
-export default function EventPage() {
-  const [data, setData] = useState<dataContainer[] | undefined>();
-  const dataImgCarousel: string[] | undefined = data?.map((x) => x.imagen);
-  const eventData = async () => {
-    const res = await fetch('http://localhost:3030/eventos?eventos=todos');
-    const resData = await res.json();
-    setData(resData);
-  };
+// interface dataContainer {
+//   Image: string;
+//   Time: Time;
+//   IdPublic: string;
+//   ID: number;
+// }
 
-  useEffect(() => {
-    eventData();
-  }, []);
-
+export default function EventPage({ eventDataApi }: { eventDataApi: any }) {
+  const eventImages = eventDataApi.map((image: any) => {
+    return {
+      id: image.ID,
+      image: image.Image,
+    };
+  });
   return (
     <div className=' w-full h-full flex items-center justify-center'>
       <div className='w-full h-full bg-black sm:hidden'>
@@ -33,7 +33,7 @@ export default function EventPage() {
           <p className='text-4xl mt-16 text-white'>Show</p>
         </div>
         <div className='h-[55%] w-full'>
-          <Carousel height='40vh' dataImg={dataImgCarousel} />
+          {/* <Carousel height='40vh' dataImg={dataImgCarousel} /> */}
         </div>
         <form className='w-full h-[20%] flex flex-col items-center'>
           <input
@@ -111,7 +111,7 @@ export default function EventPage() {
             {/* <Temporizer startedTime={dataTimer?.inicio} finallyTime={dataTimer?.fin} /> */}
           </div>
           <div className='w-full h-4/5 bg-gradient-radial from-black to-blue-950'>
-            <Carousel height='60vh' dataImg={dataImgCarousel} />
+            <Carousel height='60vh' dataImg={eventImages} />
           </div>
         </div>
       </div>

@@ -7,7 +7,6 @@ function Events() {
     queryKey: ['events'],
     queryFn: getEvents,
   });
-
   if (isLoading) return <>Loading...</>;
   if (isError) return <div>Error</div>;
   return (

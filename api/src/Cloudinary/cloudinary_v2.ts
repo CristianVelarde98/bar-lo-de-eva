@@ -30,7 +30,12 @@ export async function uploadImageCloudinary(filePath: string) {
 
 export async function deleteImageCloudinary(publicId: string) {
   try {
-    await cloudinary.uploader.destroy(publicId);
+    await cloudinary.uploader.destroy(publicId)
+    const data = await cloudinary.api.resources({
+      type:'upload',
+      prefix:'replit',
+    })
+    console.log(data);
   } catch (error: unknown) {
     if (error instanceof Error)
       throw new Error(
@@ -39,3 +44,14 @@ export async function deleteImageCloudinary(publicId: string) {
     else throw new Error(`Error inesperado al eliminar la imagen: ${publicId}`);
   }
 }
+
+// export async function cloudinaryClean (){
+//   await deleteImageCloudinary('replit/hclwwphxcpzz4parhnn9').then(a=>{console.log('deleted successfully')})
+//   const data = await cloudinary.api.resources({
+//     type:'upload',
+//     prefix:'replit',
+//     backup:false,
+//     bytes:0
+//   })
+//   console.log(data);
+// }
